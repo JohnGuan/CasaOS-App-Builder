@@ -1,0 +1,432 @@
+openapi: 3.0.0
+info:
+  title: CasaOS AppFile
+  version: 0.1.0
+  description: >-
+    <p>
+      Currently the main role of OpenAPI is to define CasaOS App File schemas.
+    </p>
+tags:
+  - name: nothing
+    description: Nothing
+paths:
+  /nothing:
+    get:
+      tags:
+      - nothing
+      summary: Get Nothing.
+      operationId: getNothing
+      description: Check and return nothing.
+      responses:
+        '200':
+          description: Nothing.
+components:
+  schemas:
+    AppFile1:
+      type: object
+      properties:
+        controller:
+            type: boolean
+            readOnly: true
+    AppFile2:
+      type: object
+      properties:
+        version:
+          type: string
+          description: Used to identify the version of CasaOS AppFile to do compatibility adaptations
+          example: "2.0"
+        title:
+          type: string
+          description: The display name of the app.
+          example: FileBrowser
+        name:
+          type: string
+          description: For system and container manager naming
+          example: filebrowser
+        icon:
+          type: string
+          description: The icon of the app.
+          example: icon.png
+        tagline:
+          type: string
+          description: A one-sentence description of the App features or value
+          example: A web file manager
+        overview:
+          type: string
+          description: A longer description of the App features or value
+          example: File Browser - Web based File Browser that provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files. It allows the creation of multiple users and each user can have its own directory.
+        thumbnail:
+          type: string
+          description: Thumbnail url for Featured Apps list
+          example: thumbnail.png
+        screenshots:
+          type: array
+          description: A list of screenshots url of the App
+          items:
+            type: string
+            example: 
+              - screenshot1.jpg
+              - screenshot2.jpg
+              - screenshot3.jpg
+        category:
+          type: array
+          description: Category url of this App, can contain multiple categories
+          items:
+            type: string
+            example: 
+              - Utilities
+              - Documents
+        developer:
+          type: object
+          description: Original developer of this App
+          properties:
+            name:
+              type: string
+              description: Name of the developer
+              example: CasaOS Team
+            website:
+              type: string
+              description: Website of the developer
+              example: https://www.casaos.io
+            donate_text:
+              type: string
+              description: Text to show in the donate button
+              example: Donate
+            donate_url:
+              type: string
+              description: Url to redirect when the donate button is clicked
+              example: https://www.casaos.io/
+        adaptor:
+          type: object
+          description: Adaptor of this App
+          properties:
+            name:
+              type: string
+              description: Name of the adaptor
+              example: CasaOS Team
+            website:
+              type: string
+              description: Website of the adaptor
+              example: https://www.casaos.io
+            donate_text:
+              type: string
+              description: Text to show in the donate button
+              example: Donate
+            donate_url:
+              type: string
+              description: Url to redirect when the donate button is clicked
+              example: https://www.casaos.io/
+        container:
+          type: object
+          description: Container of this App
+          properties:
+            image:
+              type: string
+              description: Image of the container
+              example: filebrowser/filebrowser:latest
+            shell:
+              type: string
+              description: Shell of the container
+              example: /bin/sh
+            privileged:
+              type: boolean
+              description: Privileged of the container
+              example: false
+            network_model:
+              type: string
+              description: Network model of the container
+              example: bridge
+            web_ui:
+              type: object
+              description: Web UI of the container
+              properties:
+                http:
+                  type: string
+                  description: HTTP port of the container
+                  example: "80"
+                https:
+                  type: string
+                  description: HTTPS port of the container
+                  example: "443"
+                path:
+                  type: string
+                  description: Path of the container
+                  example: /
+            health_check:
+              type: string
+              description: Health check of the container
+              example: /health
+            envs:
+              type: array
+              description: Envs of the container
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    description: Name of the env
+                    example: PUID
+                  value:
+                    type: string
+                    description: Value of the env
+                    example: "1000"
+                  configurable:
+                    type: string
+                    description: |
+                      Configurable of the env
+                      - no: Not configurable
+                      - basic: Configurable in basic mode
+                      - advanced: Configurable in advanced mode
+                    enum:
+                      - no
+                      - basic
+                      - advanced
+                  description:
+                    type: string
+                    description: Description of the env
+                    example: User ID
+            ports:
+              type: array
+              description: Ports of the container
+              items:
+                type: object
+                properties:
+                  container:
+                    type: string
+                    description: Container port of the container
+                    example: "80"
+                  host:
+                    type: string
+                    description: Host port of the container
+                    example: "80"
+                  type:
+                    type: string
+                    description: Type of the port
+                    enum:
+                      - tcp
+                      - udp
+                  allocation:
+                    type: string
+                    description: |
+                      Allocation of the port
+                      - required: Only use this port, otherwise do not continue the install
+                      - optional: If this host port is available, map it. if not available, do not map it. Both can continue to install
+                      - preferred: If this host port is available, map it. if not available it is automatically assigned by the CasaOS. Then continue with the install.
+                      - automatic: The host port is automatically assigned by the CasaOS.
+                    enum:
+                      - required
+                      - optional
+                      - preferred
+                      - automatic
+                  configurable:
+                    type: string
+                    description: |
+                      Configurable of the port
+                      - no: Not configurable
+                      - basic: Configurable in basic mode
+                      - advanced: Configurable in advanced mode
+                    enum:
+                      - no
+                      - basic
+                      - advanced
+                  description:
+                    type: string
+                    description: Description of the port
+                    example: WebUI HTTP port
+            volumes:
+              type: array
+              description: Volumes of the container
+              items:
+                type: object
+                properties:
+                  container:
+                    type: string
+                    description: Container path of the container
+                    example: /config
+                  host:
+                    type: string
+                    description: Host path of the container
+                    example: /DATA/AppData/$AppID/config
+                  mode:
+                    type: string
+                    description: Mode of the volume
+                    enum:
+                      - ro
+                      - rw
+                  allocation:
+                    type: string
+                    description: |
+                      Allocation of the volume
+                      - required: This file/directory must be present to continue mounting the volume and installing it.
+                      - optional: If this file/directory is present, mount the volume, if not, do not mount it. Both can continue with the install.
+                      - automatic: Follow the processing logic of container, mount the volume if file/directory is present, create the directory and mount it if not.
+                    enum:
+                      - required
+                      - optional
+                      - automatic
+                  configurable:
+                    type: string
+                    description: |
+                      Configurable of the volume
+                      - no: Not configurable
+                      - basic: Configurable in basic mode
+                      - advanced: Configurable in advanced mode
+                    enum:
+                      - no
+                      - basic
+                      - advanced
+                  description:
+                    type: string
+                    description: Description of the volume
+                    example: Config Data Directory
+            devices:
+              type: array
+              description: Devices of the container
+              items:
+                type: object
+                properties:
+                  container:
+                    type: string
+                    description: Device path of the container
+                    example: /dev/dri
+                  host:
+                    type: string
+                    description: Device path of the host
+                    example: /dev/dri
+                  allocation:
+                    type: string
+                    description: |
+                      Allocation of the device
+                      - required: Continue installing app only if this device is available.
+                      - optional: If this device is present, mount the device, if not, do not mount it. Both can continue with the install.
+                    enum:
+                      - required
+                      - optional
+                  configurable:
+                    type: string
+                    description: |
+                      Configurable of the device
+                      - no: Not configurable
+                      - basic: Configurable in basic mode
+                      - advanced: Configurable in advanced mode
+                    enum:
+                      - no
+                      - basic
+                      - advanced
+                  description:
+                    type: string
+                    description: Description of the device
+                    example: GPU Device
+            constraints:
+              type: object
+              description: Constraints of the container
+              properties:
+                min_memory:
+                  type: integer
+                  description: Minimum memory needed to run the container (MB)
+                  example: 64
+                min_storage:
+                  type: integer
+                  description: Minimum storage needed to run the container (MB)
+                  example: 128
+            restart_policy:
+              type: string
+              description: Restart policy of the container
+              enum:
+                - always
+                - unless-stopped
+                - on-failure
+                - no
+            sysctls:
+              type: array
+              description: Sysctls of the container
+              items:
+                type: string
+                example: 
+                  - net.ipv4.ip_forward=1
+                  - net.ipv6.conf.all.forwarding=1
+            cap_add:
+              type: array
+              description: |
+                Capabilities to add of the container
+                https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities
+              items:
+                type: string
+                example: 
+                  - NET_ADMIN
+                  - SYS_ADMIN
+            labels:
+              type: array
+              description: Labels of the container
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    description: Name of the label
+                    example: com.centurylinklabs.watchtower.enable
+                  value:
+                    type: string
+                    description: Value of the label
+                    example: "true"
+        abilities:
+          type: object
+          description: Abilities of the app
+          properties:
+            notification:
+              type: boolean
+              example: false
+            widgets:
+              type: boolean
+              example: false
+            authentification:
+              type: boolean
+              example: false
+            search:
+              type: boolean
+              example: false
+            upnp:
+              type: boolean
+              example: false
+        tips:
+          type: object
+          description: Tips of the app
+          properties:
+            before_install:
+              type: array
+              description: Tips before install of the app
+              items:
+                type: object
+                required:
+                  - content
+                properties:
+                  content:
+                    type: string
+                    description: Content of the tip
+                    example: "Username: "
+                  value:
+                    type: string
+                    description: Value of the tip
+                    example: "admin"
+        changelog:
+          type: object
+          description: Changelog of the app
+          properties:
+            latest_updates:
+              type: string
+              description: Latest updates of the app
+              example: "Some updates"
+            url:
+              type: string
+              description: URL of the changelog
+              example: "changelog.txt"
+        latest_update_date:
+          type: string
+          description: Latest update date of the app
+          example: "1640591843"
+
+
+
+
+            
+        
