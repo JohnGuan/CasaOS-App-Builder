@@ -25,9 +25,159 @@ components:
     AppFile1:
       type: object
       properties:
-        controller:
-            type: boolean
-            readOnly: true
+        version:
+          type: string
+          description: Used to identify the version of CasaOS AppFile to do compatibility adaptations
+          example: "1.0"
+        container_name:
+          type: string
+          description: Container name for container runtime.
+          example: ZeroTier
+        icon:
+          type: string
+          description: Icon for the Dashboard.
+          example: https://icon.casaos.io/main/all/zerotier.png
+        image:
+          type: string
+          description: Container image with tag
+          example: casaos/zerotier:latest
+        protocol:
+          type: string
+          description: Protocol.
+          enum:
+            - http
+            - https
+        host:
+          type: string
+          description: Host of the App.
+          example: ""
+        port_map:
+          type: string
+          description: Port map.
+        index:
+          type: string
+          description: Path of the WebUI.
+          example: /index.html
+        envs:
+          type: array
+          description: Envs.
+          items:
+            type: object
+            properties:
+              container:
+                type: string
+                description: Key of Env.
+              host:
+                type: string
+                description: Value of Env.
+              desc:
+                type: string
+                description: Description.
+              type: 
+                type: integer
+                description: Type.
+        ports:
+          type: array
+          description: Ports.
+          items:
+            type: object
+            properties:
+              container:
+                type: integer
+                description: Container.
+              host:
+                type: integer
+                description: Host.
+              protocol:
+                type: string
+                description: Protocol.
+                enum:
+                  - tcp
+                  - udp
+              desc:
+                type: string
+                description: Description.
+              type: 
+                type: integer
+                description: Type.
+        volumes:
+          type: array
+          description: Volumes.
+          items:
+            type: object
+            properties:
+              container:
+                type: string
+                description: Container path.
+              host:
+                type: string
+                description: Host path.
+              desc:
+                type: string
+                description: Description.
+              type: 
+                type: integer
+                description: Type.
+        devices:
+          type: array
+          description: Devices.
+          items:
+            type: object
+            properties:
+              container:
+                type: string
+                description: Container path.
+              host:
+                type: string
+                description: Host path.
+              desc:
+                type: string
+                description: Description.
+              type: 
+                type: integer
+                description: Type.
+        cpu_shares:
+          type: integer
+          description: CPU shares.
+          enum:
+            - 10
+            - 50
+            - 90
+        memory:
+          type: integer
+          description: Memory.
+        restart:
+          type: string
+          description: Restart.
+          enum:
+            - always
+            - on-failure
+            - unless-stopped
+        label:
+          type: string
+          description: Title of the App.
+        description:
+          type: string
+          description: Description.
+        position:
+          type: integer
+          description: Position.
+        host_name:
+          type: string
+          description: Host name.
+        privileged:
+          type: boolean
+          description: Privileged.
+        cap_add:
+          type: array
+          description: Cap add.
+          items:
+            type: string
+        cmd:
+          type: array
+          description: Cmd.
+          items:
+            type: string
     AppFile2:
       type: object
       properties:
@@ -424,9 +574,3 @@ components:
           type: string
           description: Latest update date of the app
           example: "1640591843"
-
-
-
-
-            
-        
