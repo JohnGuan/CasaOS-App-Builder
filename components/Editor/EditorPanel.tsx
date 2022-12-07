@@ -1644,7 +1644,7 @@ export default function EditorPanel() {
             ) : (
               <Text>No sysctls yet.</Text>
             )}
-            <Formik 
+            <Formik
               initialValues={{ sysctl: "" }}
               onSubmit={(values, actions) => {
                 const sysctls = appData.container?.sysctls;
@@ -1668,31 +1668,28 @@ export default function EditorPanel() {
                 }
                 actions.resetForm();
               }}
-              >
-                {(props) => (
-                  <Form>
-                    <HStack spacing="0.5rem" marginY="0.5rem">
-                    <Field name="sysctl" validate={
-                      (value) => {
+            >
+              {(props) => (
+                <Form>
+                  <HStack spacing="0.5rem" marginY="0.5rem">
+                    <Field
+                      name="sysctl"
+                      validate={(value: any) => {
                         if (!value) {
                           return "Sysctl cannot be empty";
                         }
-                      }
-                    } >
-                      {({ field, form }) => (
+                      }}
+                    >
+                      {({ field, form }: { field: any; form: any }) => (
                         <FormControl>
-                          <Input
-                            {...field}
-                            placeholder="Add new sysctl here"
-                          />
+                          <Input {...field} placeholder="Add new sysctl here" />
                         </FormControl>
-                      )
-                      }
+                      )}
                     </Field>
                     <Button type="submit">Add</Button>
-                    </HStack>
-                  </Form>
-                )}
+                  </HStack>
+                </Form>
+              )}
             </Formik>
           </FormControl>
         </FormControl>
