@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <SharedAppDataProvider>
-      <Flex direction="column" flex="1">
+      <Flex direction="column" flex="1" height="100vh">
         <Head>
           <title>CasaOS App Builder</title>
           <link rel="icon" href="/favicon.ico" />

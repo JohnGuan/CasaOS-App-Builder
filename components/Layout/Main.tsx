@@ -10,9 +10,11 @@ export default function Main(props: FlexProps) {
       direction="column"
       flex="1"
       py="1rem"
+      height="100%"
+      overflow="hidden"
       {...props}
     >
-      <Container flex="1" maxW="8xl" paddingY="1rem">
+      <Container flex="1" maxW="8xl" paddingY="1rem" height="100%">
         <EditorPanel />
       </Container>
     </Flex>
