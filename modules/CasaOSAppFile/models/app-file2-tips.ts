@@ -23,5 +23,5 @@ export interface AppFile2Tips {
      * @type {Array<AppFile2TipsBeforeInstall>}
      * @memberof AppFile2Tips
      */
-    beforeInstall?: Array<AppFile2TipsBeforeInstall>;
+    before_install?: Array<AppFile2TipsBeforeInstall>;
 }

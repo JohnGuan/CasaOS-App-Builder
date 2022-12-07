@@ -34,11 +34,11 @@ export interface AppFile2Developer {
      * @type {string}
      * @memberof AppFile2Developer
      */
-    donateText?: string;
+    donate_text?: string;
     /**
      * Url to redirect when the donate button is clicked
      * @type {string}
      * @memberof AppFile2Developer
      */
-    donateUrl?: string;
+    donate_url?: string;
 }

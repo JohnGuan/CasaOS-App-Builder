@@ -22,11 +22,11 @@ export interface AppFile2ContainerConstraints {
      * @type {number}
      * @memberof AppFile2ContainerConstraints
      */
-    minMemory?: number;
+    min_memory?: number;
     /**
      * Minimum storage needed to run the container (MB)
      * @type {number}
      * @memberof AppFile2ContainerConstraints
      */
-    minStorage?: number;
+    min_storage?: number;
 }

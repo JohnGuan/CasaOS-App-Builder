@@ -31,7 +31,7 @@ export interface AppFile1 {
      * @type {string}
      * @memberof AppFile1
      */
-    containerName?: string;
+    container_name?: string;
     /**
      * Icon for the Dashboard.
      * @type {string}
@@ -61,7 +61,7 @@ export interface AppFile1 {
      * @type {string}
      * @memberof AppFile1
      */
-    portMap?: string;
+    port_map?: string;
     /**
      * Path of the WebUI.
      * @type {string}
@@ -97,7 +97,7 @@ export interface AppFile1 {
      * @type {number}
      * @memberof AppFile1
      */
-    cpuShares?: AppFile1CpuSharesEnum;
+    cpu_shares?: AppFile1CpuSharesEnum;
     /**
      * Memory.
      * @type {number}
@@ -145,7 +145,7 @@ export interface AppFile1 {
      * @type {Array<string>}
      * @memberof AppFile1
      */
-    capAdd?: Array<string>;
+    cap_add?: Array<string>;
     /**
      * Cmd.
      * @type {Array<string>}

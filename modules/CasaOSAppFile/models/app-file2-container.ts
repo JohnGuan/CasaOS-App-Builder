@@ -47,19 +47,19 @@ export interface AppFile2Container {
      * @type {string}
      * @memberof AppFile2Container
      */
-    networkModel?: string;
+    network_model?: string;
     /**
      * 
      * @type {AppFile2ContainerWebUi}
      * @memberof AppFile2Container
      */
-    webUi?: AppFile2ContainerWebUi;
+    web_ui?: AppFile2ContainerWebUi;
     /**
      * Health check of the container
      * @type {string}
      * @memberof AppFile2Container
      */
-    healthCheck?: string;
+    health_check?: string;
     /**
      * Envs of the container
      * @type {Array<AppFile2ContainerEnvs>}
@@ -95,7 +95,7 @@ export interface AppFile2Container {
      * @type {string}
      * @memberof AppFile2Container
      */
-    restartPolicy?: AppFile2ContainerRestartPolicyEnum;
+    restart_policy?: AppFile2ContainerRestartPolicyEnum;
     /**
      * Sysctls of the container
      * @type {Array<string>}
@@ -107,7 +107,7 @@ export interface AppFile2Container {
      * @type {Array<string>}
      * @memberof AppFile2Container
      */
-    capAdd?: Array<string>;
+    cap_add?: Array<string>;
     /**
      * Labels of the container
      * @type {Array<AppFile2ContainerLabels>}

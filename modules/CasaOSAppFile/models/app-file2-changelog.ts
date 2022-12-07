@@ -22,7 +22,7 @@ export interface AppFile2Changelog {
      * @type {string}
      * @memberof AppFile2Changelog
      */
-    latestUpdates?: string;
+    latest_updates?: string;
     /**
      * URL of the changelog
      * @type {string}

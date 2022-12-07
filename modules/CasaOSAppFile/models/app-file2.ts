@@ -118,5 +118,5 @@ export interface AppFile2 {
      * @type {string}
      * @memberof AppFile2
      */
-    latestUpdateDate?: string;
+    latest_update_date?: string;
 }
