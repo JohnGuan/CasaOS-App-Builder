@@ -41,6 +41,7 @@ import {
   AppFile2ContainerDevicesAllocationEnum,
   AppFile2ContainerDevicesConfigurableEnum,
   AppFile2ContainerRestartPolicyEnum,
+  appCaps,
 } from "../../modules/CasaOSAppFile";
 import AppFileViewer from "../AppFiles/AppFileViewer";
 
@@ -185,7 +186,10 @@ export default function EditorPanel() {
           </FormLabel>
           {appData.screenshots?.length || false ? (
             appData.screenshots.map((screenshot, index) => (
-              <InputGroup marginTop={index != 0 ? "0.25rem" : "auto"}>
+              <InputGroup
+                key={index}
+                marginTop={index != 0 ? "0.25rem" : "auto"}
+              >
                 <Input
                   key={index}
                   value={screenshot}
@@ -223,7 +227,7 @@ export default function EditorPanel() {
         <br />
         <FormControl>
           <FormLabel>Category</FormLabel>
-          <HStack spacing="0.5rem" marginBottom="0.5rem">
+          <VStack alignItems="start" marginBottom="0.5rem">
             {appData.category?.length || false ? (
               appData.category?.map((category, index) => (
                 <Tag key={index}>
@@ -243,28 +247,34 @@ export default function EditorPanel() {
             ) : (
               <Text>No category yet. Please add one.</Text>
             )}
-          </HStack>
+          </VStack>
           <Select
             placeholder="Select Category"
             size="sm"
             onChange={(e) => {
-              if (appData.category) {
-                setAppData({
-                  ...appData,
-                  category: [...appData.category, e.target.value],
-                });
-              } else {
-                setAppData({
-                  ...appData,
-                  category: [e.target.value],
-                });
+              if (!appData.category?.includes(e.target.value)) {
+                if (appData.category) {
+                  setAppData({
+                    ...appData,
+                    category: [...appData.category, e.target.value],
+                  });
+                } else {
+                  setAppData({
+                    ...appData,
+                    category: [e.target.value],
+                  });
+                }
               }
               e.target.value = "";
             }}
           >
-            {appCategory.map((category) => (
-              <option value={category.name}>{category.name}</option>
-            ))}
+            {appCategory.map((category) =>
+              appData.category?.includes(category.name) ? null : (
+                <option key={category.name} value={category.name}>
+                  {category.name}
+                </option>
+              )
+            )}
           </Select>
           <FormHelperText>App category</FormHelperText>
         </FormControl>
@@ -548,6 +558,7 @@ export default function EditorPanel() {
           <FormControl>
             <FormLabel>Network</FormLabel>
             <Select
+              placeholder="Select Network"
               value={appData.container?.network_model}
               onChange={(e) =>
                 setAppData({
@@ -680,7 +691,7 @@ export default function EditorPanel() {
             </FormLabel>
             {appData.container?.ports?.length || false ? (
               appData.container?.ports?.map((port, index) => (
-                <HStack spacing="0.5rem" marginBottom="1rem">
+                <HStack key={index} spacing="0.5rem" marginBottom="1rem">
                   <Box flexGrow="1" paddingLeft="0.5rem" borderLeft="2px">
                     <HStack spacing="0.5rem" marginBottom="0.5rem">
                       <FormControl>
@@ -752,6 +763,7 @@ export default function EditorPanel() {
                             >
                           ).map((type) => (
                             <option
+                              key={type}
                               value={AppFile2ContainerPortsTypeEnum[type]}
                             >
                               {AppFile2ContainerPortsTypeEnum[type]}
@@ -788,6 +800,7 @@ export default function EditorPanel() {
                             >
                           ).map((type) => (
                             <option
+                              key={type}
                               value={AppFile2ContainerPortsAllocationEnum[type]}
                             >
                               {type}
@@ -822,6 +835,7 @@ export default function EditorPanel() {
                             >
                           ).map((type) => (
                             <option
+                              key={type}
                               value={
                                 AppFile2ContainerPortsConfigurableEnum[type]
                               }
@@ -932,6 +946,7 @@ export default function EditorPanel() {
             {appData.container?.volumes?.length ? (
               appData.container?.volumes.map((volume, index) => (
                 <HStack
+                  key={index}
                   spacing="0.5rem"
                   paddingLeft="0.5rem"
                   borderLeft="2px"
@@ -1006,6 +1021,7 @@ export default function EditorPanel() {
                             >
                           ).map((type) => (
                             <option
+                              key={type}
                               value={AppFile2ContainerVolumesModeEnum[type]}
                             >
                               {AppFile2ContainerVolumesModeEnum[type]}
@@ -1042,6 +1058,7 @@ export default function EditorPanel() {
                             >
                           ).map((type) => (
                             <option
+                              key={type}
                               value={
                                 AppFile2ContainerVolumesAllocationEnum[type]
                               }
@@ -1078,6 +1095,7 @@ export default function EditorPanel() {
                             >
                           ).map((type) => (
                             <option
+                              key={type}
                               value={
                                 AppFile2ContainerVolumesConfigurableEnum[type]
                               }
@@ -1186,6 +1204,7 @@ export default function EditorPanel() {
             {appData.container?.devices?.length ? (
               appData.container.devices.map((device, index) => (
                 <HStack
+                  key={index}
                   spacing="0.5rem"
                   marginBottom="1rem"
                   paddingLeft="0.5rem"
@@ -1262,6 +1281,7 @@ export default function EditorPanel() {
                             >
                           ).map((type) => (
                             <option
+                              key={type}
                               value={
                                 AppFile2ContainerDevicesAllocationEnum[type]
                               }
@@ -1298,6 +1318,7 @@ export default function EditorPanel() {
                             >
                           ).map((type) => (
                             <option
+                              key={type}
                               value={
                                 AppFile2ContainerDevicesConfigurableEnum[type]
                               }
@@ -1401,6 +1422,7 @@ export default function EditorPanel() {
             {appData.container?.envs?.length ? (
               appData.container.envs.map((env, index) => (
                 <HStack
+                  key={index}
                   spacing="0.5rem"
                   marginBottom="1rem"
                   paddingLeft="0.5rem"
@@ -1477,6 +1499,7 @@ export default function EditorPanel() {
                             >
                           ).map((type) => (
                             <option
+                              key={type}
                               value={
                                 AppFile2ContainerEnvsConfigurableEnum[type]
                               }
@@ -1531,6 +1554,179 @@ export default function EditorPanel() {
             ) : (
               <Text>No environment variables yet.</Text>
             )}
+          </FormControl>
+          <br />
+          <FormControl>
+            <FormLabel>Cap Add</FormLabel>
+            <VStack alignItems="start" marginBottom="0.5rem">
+              {appData.container?.cap_add?.length ? (
+                appData.container.cap_add.map((cap, index) => (
+                  <Tag key={index}>
+                    <TagLabel>{cap}</TagLabel>
+                    <TagCloseButton
+                      onClick={() => {
+                        const cap_add = appData.container?.cap_add;
+                        if (cap_add) {
+                          cap_add.splice(index, 1);
+                          setAppData({
+                            ...appData,
+                            container: {
+                              ...appData.container,
+                              cap_add: cap_add,
+                            },
+                          });
+                        }
+                      }}
+                    />
+                  </Tag>
+                ))
+              ) : (
+                <Text>No capabilities added yet.</Text>
+              )}
+            </VStack>
+            <Select
+              placeholder="Select capability to add"
+              size="sm"
+              onChange={(e) => {
+                const cap_add = appData.container?.cap_add;
+                if (!cap_add?.includes(e.target.value)) {
+                  if (cap_add) {
+                    cap_add.push(e.target.value);
+                    setAppData({
+                      ...appData,
+                      container: {
+                        ...appData.container,
+                        cap_add: cap_add,
+                      },
+                    });
+                  } else {
+                    setAppData({
+                      ...appData,
+                      container: {
+                        ...appData.container,
+                        cap_add: [e.target.value],
+                      },
+                    });
+                  }
+                }
+                e.target.value = "";
+              }}
+            >
+              {appCaps.map((cap) =>
+                appData.container?.cap_add?.includes(cap) ? null : (
+                  <option key={cap} value={cap}>
+                    {cap}
+                  </option>
+                )
+              )}
+            </Select>
+          </FormControl>
+          <br />
+          <FormControl>
+            <FormLabel>Restart Policy</FormLabel>
+            <Select
+              placeholder="Select restart policy"
+              value={appData.container?.restart_policy}
+              onChange={(e) => {
+                setAppData({
+                  ...appData,
+                  container: {
+                    ...appData.container,
+                    restart_policy: e.target.value,
+                  },
+                });
+              }}
+            >
+              {(
+                Object.keys(AppFile2ContainerRestartPolicyEnum) as Array<
+                  keyof typeof AppFile2ContainerRestartPolicyEnum
+                >
+              ).map((type) => (
+                <option
+                  key={type}
+                  value={AppFile2ContainerRestartPolicyEnum[type]}
+                >
+                  {AppFile2ContainerRestartPolicyEnum[type]}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          <br />
+          <FormControl>
+            <FormLabel>CMD</FormLabel>
+            {appData.container?.cmd?.length ? (
+              <VStack alignItems="start" marginBottom="0.5rem">
+                {appData.container?.cmd?.map((c, index) => (
+                  <Tag key={index}>
+                    <TagLabel>{c}</TagLabel>
+                    <TagCloseButton
+                      onClick={() => {
+                        const cmd = appData.container?.cmd;
+                        if (cmd) {
+                          cmd.splice(index, 1);
+                          setAppData({
+                            ...appData,
+                            container: {
+                              ...appData.container,
+                              cmd: cmd,
+                            },
+                          });
+                        }
+                      }}
+                    />
+                  </Tag>
+                ))}
+              </VStack>
+            ) : (
+              <Text>No CMD yet.</Text>
+            )}
+            <Formik
+              initialValues={{ cmd: "" }}
+              onSubmit={(values, actions) => {
+                const cmd = appData.container?.cmd;
+                if (cmd) {
+                  cmd.push(values.cmd);
+                  setAppData({
+                    ...appData,
+                    container: {
+                      ...appData.container,
+                      cmd: cmd,
+                    },
+                  });
+                } else {
+                  setAppData({
+                    ...appData,
+                    container: {
+                      ...appData.container,
+                      cmd: [values.cmd],
+                    },
+                  });
+                }
+                actions.setValues({ cmd: "" });
+              }}
+            >
+              {(props) => (
+                <Form>
+                  <HStack spacing="0.5rem" marginBottom="0.5rem">
+                    <Field
+                      name="cmd"
+                      validate={(value: any) => {
+                        if (!value) {
+                          return "CMD cannot be empty";
+                        }
+                      }}
+                    >
+                      {({ field, form }: { field: any; form: any }) => (
+                        <FormControl>
+                          <Input {...field} placeholder="Add new CMD here" />
+                        </FormControl>
+                      )}
+                    </Field>
+                    <Button type="submit">Add</Button>
+                  </HStack>
+                </Form>
+              )}
+            </Formik>
           </FormControl>
           <br />
           <FormControl>
@@ -1589,111 +1785,146 @@ export default function EditorPanel() {
             </HStack>
           </FormControl>
           <br />
-          <FormControl>
-            <FormLabel>Restart Policy</FormLabel>
-            <Select
-              placeholder="Select restart policy"
-              value={appData.container?.restart_policy}
-              onChange={(e) => {
-                setAppData({
-                  ...appData,
-                  container: {
-                    ...appData.container,
-                    restart_policy: e.target.value,
-                  },
-                });
-              }}
-            >
-              {(
-                Object.keys(AppFile2ContainerRestartPolicyEnum) as Array<
-                  keyof typeof AppFile2ContainerRestartPolicyEnum
-                >
-              ).map((type) => (
-                <option value={AppFile2ContainerRestartPolicyEnum[type]}>
-                  {AppFile2ContainerRestartPolicyEnum[type]}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>Sysctls</FormLabel>
-            {appData.container?.sysctls?.length ? (
-              <VStack alignItems="start">
-                {appData.container?.sysctls?.map((sysctl, index) => (
-                  <Tag key={index}>
-                    <TagLabel>{sysctl}</TagLabel>
-                    <TagCloseButton
-                      onClick={() => {
-                        const sysctls = appData.container?.sysctls;
-                        if (sysctls) {
-                          sysctls.splice(index, 1);
-                          setAppData({
-                            ...appData,
-                            container: {
-                              ...appData.container,
-                              sysctls: sysctls,
-                            },
-                          });
-                        }
-                      }}
-                    />
-                  </Tag>
-                ))}
-              </VStack>
-            ) : (
-              <Text>No sysctls yet.</Text>
-            )}
-            <Formik
-              initialValues={{ sysctl: "" }}
-              onSubmit={(values, actions) => {
-                const sysctls = appData.container?.sysctls;
-                if (sysctls) {
-                  sysctls.push(values.sysctl);
+        </FormControl>
+        <br />
+        <FormControl>
+          <FormLabel>
+            Tips Before Install{" "}
+            <Button
+              size="xs"
+              colorScheme="blue"
+              onClick={() => {
+                const before_install = appData.tips?.before_install;
+                if (before_install) {
+                  before_install.push({
+                    content: "",
+                    value: "",
+                  });
                   setAppData({
                     ...appData,
-                    container: {
-                      ...appData.container,
-                      sysctls: sysctls,
+                    tips: {
+                      ...appData.tips,
+                      before_install: before_install,
                     },
                   });
                 } else {
                   setAppData({
                     ...appData,
-                    container: {
-                      ...appData.container,
-                      sysctls: [values.sysctl],
+                    tips: {
+                      ...appData.tips,
+                      before_install: [
+                        {
+                          content: "",
+                          value: "",
+                        },
+                      ],
                     },
                   });
                 }
-                actions.resetForm();
               }}
             >
-              {(props) => (
-                <Form>
-                  <HStack spacing="0.5rem" marginY="0.5rem">
-                    <Field
-                      name="sysctl"
-                      validate={(value: any) => {
-                        if (!value) {
-                          return "Sysctl cannot be empty";
-                        }
-                      }}
-                    >
-                      {({ field, form }: { field: any; form: any }) => (
-                        <FormControl>
-                          <Input {...field} placeholder="Add new sysctl here" />
-                        </FormControl>
-                      )}
-                    </Field>
-                    <Button type="submit">Add</Button>
-                  </HStack>
-                </Form>
-              )}
-            </Formik>
-          </FormControl>
+              Add
+            </Button>
+          </FormLabel>
+          {appData.tips?.before_install?.length ? (
+            appData.tips?.before_install?.map((tip, index) => (
+              <HStack spacing="0.5rem" marginBottom="0.5rem">
+                <FormControl key={index}>
+                  <FormLabel>Content</FormLabel>
+                  <Input
+                    value={tip.content}
+                    onChange={(e) => {
+                      const before_install = appData.tips?.before_install;
+                      if (before_install) {
+                        before_install[index].content = e.target.value;
+                        setAppData({
+                          ...appData,
+                          tips: {
+                            ...appData.tips,
+                            before_install: before_install,
+                          },
+                        });
+                      }
+                    }}
+                  />
+                  </FormControl>
+                  <FormControl>
+                  <FormLabel>Value</FormLabel>
+                  <Input
+                    value={tip.value}
+                    onChange={(e) => {
+                      const before_install = appData.tips?.before_install;
+                      if (before_install) {
+                        before_install[index].value = e.target.value;
+                        setAppData({
+                          ...appData,
+                          tips: {
+                            ...appData.tips,
+                            before_install: before_install,
+                          },
+                        });
+                      }
+                    }}
+                  />
+                  </FormControl>
+                  <IconButton
+                    aria-label="Delete"
+                    height="4.5rem"
+                    icon={<MdDelete />}
+                    onClick={() => {
+                      const before_install = appData.tips?.before_install;
+                      if (before_install) {
+                        before_install.splice(index, 1);
+                        setAppData({
+                          ...appData,
+                          tips: {
+                            ...appData.tips,
+                            before_install: before_install,
+                          },
+                        });
+                      }
+                    }}
+                  />
+              </HStack>
+            ))
+          ) : (
+            <Text>No tips yet.</Text>
+          )}
         </FormControl>
         <br />
+        <FormControl>
+          <FormLabel>Changelog</FormLabel>
+          <FormControl>
+            <FormLabel>Latest Updates</FormLabel>
+            <Textarea
+              value={appData.changelog?.latest_updates}
+              onChange={(e) => {
+                setAppData({
+                  ...appData,
+                  changelog: {
+                    ...appData.changelog,
+                    latest_updates: e.target.value,
+                  },
+                });
+              }}
+            />
+            </FormControl>
+            <FormControl>
+            <FormLabel>Full Changelog URL</FormLabel>
+            <Input
+              value={appData.changelog?.url}
+              onChange={(e) => {
+                setAppData({
+                  ...appData,
+                  changelog: {
+                    ...appData.changelog,
+                    url: e.target.value,
+                  },
+                });
+              }}
+            />
+            </FormControl>
+        </FormControl>
       </Box>
       <Box flex="1" height="100%" overflowY="scroll">
         <AppFileViewer />
