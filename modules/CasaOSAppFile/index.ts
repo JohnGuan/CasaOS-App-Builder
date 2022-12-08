@@ -162,12 +162,65 @@ export const appCaps = [
   "SYS_TIME",
   "SYS_TTY_CONFIG",
   "SYSLOG",
-  "WAKE_ALARM"
-]
+  "WAKE_ALARM",
+];
 
-const [useAppData, SharedAppDataProvider] = createStateContext<AppFile2>({
+export const newAppFile2: AppFile2 = {
   version: "2.0",
-} as AppFile2);
+  title: "",
+  name: "",
+  icon: "",
+  tagline: "",
+  overview: "",
+  thumbnail: "",
+  screenshots: ["", "", ""],
+  category: [],
+  developer: {
+    name: "",
+    website: "",
+    donate_text: "",
+    donate_url: "",
+  },
+  adaptor: {
+    name: "",
+    website: "",
+    donate_text: "",
+    donate_url: "",
+  },
+  container: {
+    image: "",
+    shell: "",
+    privileged: false,
+    health_check: "",
+    network_model: "bridge",
+    web_ui: {
+      http: "",
+      https: "",
+      path: "",
+    },
+    ports: [],
+    volumes: [],
+    devices: [],
+    envs: [],
+    cap_add: [],
+    restart_policy: "unless-stopped" as any,
+    cmd: [],
+    constraints: {
+      min_memory: 64,
+      min_storage: 128,
+    },
+  },
+  tips: {
+    before_install: [],
+  },
+  changelog: {
+    latest_updates: "",
+    url: "",
+  },
+  latest_update_date: "",
+};
+
+const [useAppData, SharedAppDataProvider] = createStateContext<AppFile2>(newAppFile2);
 
 export * from "./models";
 export { useAppData, SharedAppDataProvider };
