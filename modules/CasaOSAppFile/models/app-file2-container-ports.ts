@@ -78,7 +78,7 @@ export enum AppFile2ContainerPortsAllocationEnum {
     * @enum {string}
     */
 export enum AppFile2ContainerPortsConfigurableEnum {
-    No = 'no',
+    False = 'false',
     Basic = 'basic',
     Advanced = 'advanced'
 }

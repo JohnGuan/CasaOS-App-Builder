@@ -48,7 +48,7 @@ export interface AppFile2ContainerEnvs {
     * @enum {string}
     */
 export enum AppFile2ContainerEnvsConfigurableEnum {
-    No = 'no',
+    False = 'false',
     Basic = 'basic',
     Advanced = 'advanced'
 }

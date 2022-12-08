@@ -103,6 +103,12 @@ export interface AppFile2Container {
      */
     sysctls?: Array<string>;
     /**
+     * Commands of the container
+     * @type {Array<string>}
+     * @memberof AppFile2Container
+     */
+    cmd?: Array<string>;
+    /**
      * Capabilities to add of the container https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities 
      * @type {Array<string>}
      * @memberof AppFile2Container
@@ -124,6 +130,6 @@ export enum AppFile2ContainerRestartPolicyEnum {
     Always = 'always',
     UnlessStopped = 'unless-stopped',
     OnFailure = 'on-failure',
-    No = 'no'
+    False = 'false'
 }
 

@@ -133,7 +133,7 @@ export interface AppFile1 {
      * @type {string}
      * @memberof AppFile1
      */
-    hostName?: string;
+    host_name?: string;
     /**
      * Privileged.
      * @type {boolean}
