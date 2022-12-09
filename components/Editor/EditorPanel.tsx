@@ -1,4 +1,5 @@
 import {
+  AspectRatio,
   Box,
   Button,
   Flex,
@@ -7,8 +8,10 @@ import {
   FormLabel,
   HStack,
   IconButton,
+  Image,
   Input,
   InputGroup,
+  InputLeftElement,
   InputRightElement,
   NumberDecrementStepper,
   NumberIncrementStepper,
@@ -42,10 +45,12 @@ import {
   AppFile2ContainerDevicesConfigurableEnum,
   AppFile2ContainerRestartPolicyEnum,
   appCaps,
+  useAppImageAgents,
 } from "../../modules/CasaOSAppFile";
 import AppFileViewer from "../AppFiles/AppFileViewer";
 
 export default function EditorPanel() {
+  const [appImageAgents, setAppImageAgents] = useAppImageAgents();
   const [appData, setAppData] = useAppData();
 
   const toast = useToast();
@@ -53,6 +58,10 @@ export default function EditorPanel() {
   useEffect(() => {
     console.log("appData", appData);
   }, [appData]);
+
+  useEffect(() => {
+    console.log("appImageAgents", appImageAgents);
+  }, [appImageAgents]);
 
   return (
     <Flex direction="row" height="100%">
@@ -103,15 +112,72 @@ export default function EditorPanel() {
         <br />
         <FormControl>
           <FormLabel>Icon</FormLabel>
-          <Input
-            value={appData.icon}
-            onChange={(e) =>
-              setAppData({
-                ...appData,
-                icon: e.target.value,
-              })
-            }
-          />
+          <InputGroup>
+            {appData.icon ? (
+              <InputLeftElement>
+                <img
+                  src={
+                    appData.icon?.startsWith("http")
+                      ? appData.icon
+                      : appImageAgents.icon
+                  }
+                  width="32"
+                  height="32"
+                />
+              </InputLeftElement>
+            ) : null}
+
+            <Input
+              value={appData.icon}
+              paddingRight="5rem"
+              onChange={(e) => {
+                setAppData({
+                  ...appData,
+                  icon: e.target.value,
+                });
+                if (!e.target.value) {
+                  setAppImageAgents({
+                    ...appImageAgents,
+                    icon: "",
+                  });
+                }
+              }}
+            />
+            <InputRightElement width="5rem">
+              <Button
+                colorScheme="blue"
+                size="sm"
+                onClick={() => {
+                  const input = document.createElement("input");
+                  input.type = "file";
+                  input.accept = "image/*";
+                  input.onchange = (e) => {
+                    const file = (e.target as HTMLInputElement).files?.[0];
+                    const reader = new FileReader();
+                    if (file) {
+                      const filename = file.name;
+                      const fileext = filename.split(".").pop();
+                      reader.readAsDataURL(file);
+                      reader.onloadend = () => {
+                        setAppImageAgents({
+                          ...appImageAgents,
+                          icon: reader.result as string,
+                        });
+                      };
+                      setAppData({
+                        ...appData,
+                        icon: "icon." + fileext,
+                      });
+                    }
+                  };
+                  input.click();
+                  input.remove();
+                }}
+              >
+                Upload
+              </Button>
+            </InputRightElement>
+          </InputGroup>
           <FormHelperText>e.g. "https://casaos.com/icon.png"</FormHelperText>
         </FormControl>
         <br />
@@ -149,15 +215,76 @@ export default function EditorPanel() {
         <br />
         <FormControl>
           <FormLabel>Thumbnail</FormLabel>
-          <Input
-            value={appData.thumbnail}
-            onChange={(e) =>
-              setAppData({
-                ...appData,
-                thumbnail: e.target.value,
-              })
-            }
-          />
+          {appData.thumbnail ? (
+            <AspectRatio
+              marginY="0.5rem"
+              alignItems="center"
+              ratio={16 / 9}
+              maxW="24rem"
+            >
+              <Image
+                borderRadius="0.5rem"
+                src={
+                  appData.thumbnail?.startsWith("http")
+                    ? appData.thumbnail
+                    : appImageAgents.thumbnail
+                }
+              />
+            </AspectRatio>
+          ) : null}
+          <InputGroup>
+            <Input
+              value={appData.thumbnail}
+              paddingRight="5rem"
+              onChange={(e) => {
+                setAppData({
+                  ...appData,
+                  thumbnail: e.target.value,
+                });
+                if (!e.target.value) {
+                  setAppImageAgents({
+                    ...appImageAgents,
+                    thumbnail: "",
+                  });
+                }
+              }}
+            />
+            <InputRightElement width="5rem">
+              <Button
+                colorScheme="blue"
+                size="sm"
+                onClick={() => {
+                  const input = document.createElement("input");
+                  input.type = "file";
+                  input.accept = "image/*";
+                  input.onchange = (e) => {
+                    const file = (e.target as HTMLInputElement).files?.[0];
+                    const reader = new FileReader();
+                    if (file) {
+                      const filename = file.name;
+                      const fileext = filename.split(".").pop();
+                      reader.readAsDataURL(file);
+                      reader.onloadend = () => {
+                        setAppImageAgents({
+                          ...appImageAgents,
+                          thumbnail: reader.result as string,
+                        });
+                      };
+                      const blob = new Blob([file], { type: file.type });
+                      setAppData({
+                        ...appData,
+                        thumbnail: "thumbnail." + fileext,
+                      });
+                    }
+                  };
+                  input.click();
+                  input.remove();
+                }}
+              >
+                Upload
+              </Button>
+            </InputRightElement>
+          </InputGroup>
           <FormHelperText>Thumbnail url for Featured Apps list</FormHelperText>
         </FormControl>
         <br />
@@ -168,6 +295,7 @@ export default function EditorPanel() {
               colorScheme="blue"
               size="xs"
               onClick={() => {
+                // add new screenshot to appData.screenshots
                 if (appData.screenshots) {
                   setAppData({
                     ...appData,
@@ -179,12 +307,43 @@ export default function EditorPanel() {
                     screenshots: [""],
                   });
                 }
+                // add new screenshot to appImageAgents.screenshots
+                if (appImageAgents.screenshots) {
+                  setAppImageAgents({
+                    ...appImageAgents,
+                    screenshots: [...appImageAgents.screenshots, ""],
+                  });
+                } else {
+                  setAppImageAgents({
+                    ...appImageAgents,
+                    screenshots: [""],
+                  });
+                }
               }}
             >
               Add
             </Button>
           </FormLabel>
-          {appData.screenshots?.length || false ? (
+          {
+            appData.screenshots?.length ? (
+              <Flex flexDirection="row" width="100%" justifyContent="center" marginBottom="0.5rem">
+                {appData.screenshots.map((screenshot, index) => (
+                  appData.screenshots?.[index] || appImageAgents.screenshots[index] ?
+                  (<AspectRatio key={index} ratio={16 / 9} width="24rem" marginLeft={index > 0 ? "0.5rem" : "0"}>
+                    <Image
+                      borderRadius="0.5rem"
+                      src={
+                        screenshot.startsWith("http")
+                          ? screenshot
+                          : appImageAgents.screenshots[index]
+                      }
+                    />
+                  </AspectRatio>) : null
+                ))}
+              </Flex>
+            ) : null
+          }
+          {appData.screenshots?.length ? (
             appData.screenshots.map((screenshot, index) => (
               <InputGroup
                 key={index}
@@ -192,25 +351,89 @@ export default function EditorPanel() {
               >
                 <Input
                   key={index}
+                  paddingRight="7rem"
                   value={screenshot}
-                  onChange={(e) =>
+                  onChange={(e) => {
                     setAppData({
                       ...appData,
                       screenshots: appData.screenshots?.map((screenshot, i) =>
                         i === index ? e.target.value : screenshot
                       ),
-                    })
-                  }
+                    });
+                    if (!e.target.value) {
+                      setAppImageAgents({
+                        ...appImageAgents,
+                        screenshots: appImageAgents.screenshots.map(
+                          (screenshot, i) => (i === index ? "" : screenshot)
+                        ),
+                      });
+                    }
+                  }}
                 />
-                <InputRightElement>
+                <InputRightElement width="7.25rem">
+                  <Button
+                    colorScheme="blue"
+                    size="sm"
+                    onClick={() => {
+                      const input = document.createElement("input");
+                      input.type = "file";
+                      input.accept = "image/*";
+                      input.onchange = (e) => {
+                        const file = (e.target as HTMLInputElement).files?.[0];
+                        const reader = new FileReader();
+                        if (file) {
+                          const filename = file.name;
+                          const fileext = filename.split(".").pop();
+                          reader.readAsDataURL(file);
+                          reader.onloadend = () => {
+                            setAppImageAgents({
+                              ...appImageAgents,
+                              screenshots: appImageAgents.screenshots.map(
+                                (screenshot, i) =>
+                                  i === index
+                                    ? (reader.result as string)
+                                    : screenshot
+                              ),
+                            });
+                          };
+                          setAppData({
+                            ...appData,
+                            screenshots: appData.screenshots?.map(
+                              (screenshot, i) =>
+                                i === index
+                                  ? "screenshot-" + (index + 1) + "." + fileext
+                                  : screenshot
+                            ),
+                          });
+                        }
+                      };
+                      input.click();
+                      input.remove();
+                    }}
+                  >
+                    Upload
+                  </Button>
                   <IconButton
                     aria-label="Delete Screenshot"
                     icon={<MdDelete />}
+                    marginLeft="0.25rem"
                     size="sm"
                     onClick={() => {
+                      // Delete screenshot from appData
                       setAppData({
                         ...appData,
-                        screenshots: appData.screenshots?.filter(
+                        screenshots: appData.screenshots
+                          ?.filter((screenshot, i) => i !== index)
+                          .map((screenshot, i) =>
+                            screenshot.startsWith("screenshot-")
+                              ? "screenshot-" + (i + 1) + ".png"
+                              : screenshot
+                          ),
+                      });
+                      // Delete screenshot from appImageAgents
+                      setAppImageAgents({
+                        ...appImageAgents,
+                        screenshots: appImageAgents.screenshots.filter(
                           (screenshot, i) => i !== index
                         ),
                       });
@@ -1847,8 +2070,8 @@ export default function EditorPanel() {
                       }
                     }}
                   />
-                  </FormControl>
-                  <FormControl>
+                </FormControl>
+                <FormControl>
                   <FormLabel>Value</FormLabel>
                   <Input
                     value={tip.value}
@@ -1866,25 +2089,25 @@ export default function EditorPanel() {
                       }
                     }}
                   />
-                  </FormControl>
-                  <IconButton
-                    aria-label="Delete"
-                    height="4.5rem"
-                    icon={<MdDelete />}
-                    onClick={() => {
-                      const before_install = appData.tips?.before_install;
-                      if (before_install) {
-                        before_install.splice(index, 1);
-                        setAppData({
-                          ...appData,
-                          tips: {
-                            ...appData.tips,
-                            before_install: before_install,
-                          },
-                        });
-                      }
-                    }}
-                  />
+                </FormControl>
+                <IconButton
+                  aria-label="Delete"
+                  height="4.5rem"
+                  icon={<MdDelete />}
+                  onClick={() => {
+                    const before_install = appData.tips?.before_install;
+                    if (before_install) {
+                      before_install.splice(index, 1);
+                      setAppData({
+                        ...appData,
+                        tips: {
+                          ...appData.tips,
+                          before_install: before_install,
+                        },
+                      });
+                    }
+                  }}
+                />
               </HStack>
             ))
           ) : (
@@ -1908,8 +2131,8 @@ export default function EditorPanel() {
                 });
               }}
             />
-            </FormControl>
-            <FormControl>
+          </FormControl>
+          <FormControl>
             <FormLabel>Full Changelog URL</FormLabel>
             <Input
               value={appData.changelog?.url}
@@ -1923,7 +2146,7 @@ export default function EditorPanel() {
                 });
               }}
             />
-            </FormControl>
+          </FormControl>
         </FormControl>
       </Box>
       <Box flex="1" height="100%" overflowY="scroll">

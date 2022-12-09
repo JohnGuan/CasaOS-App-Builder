@@ -11,6 +11,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
+import AppStoreControl from "../AppFiles/AppStoreControl";
 import ImportButton from "../AppFiles/ImportButton";
 import NewButton from "../AppFiles/NewButton";
 import SaveButton from "../AppFiles/SaveButton";
@@ -36,6 +37,7 @@ export default function Navbar(props: BoxProps) {
             <NewButton />
             <ImportButton />
             <SaveButton />
+            <AppStoreControl />
             <IconButton
               aria-label={"Switch to " + (colorMode === "dark" ? "light" : "dark") + " mode"}
               icon={colorMode === "dark" ? <MdDarkMode /> : <MdLightMode />}

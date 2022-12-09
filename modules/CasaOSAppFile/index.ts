@@ -165,6 +165,12 @@ export const appCaps = [
   "WAKE_ALARM",
 ];
 
+export const appImageAgents = {
+  icon: "",
+  thumbnail: "",
+  screenshots: ["", "", ""],
+}
+
 export const newAppFile2: AppFile2 = {
   version: "2.0",
   title: "",
@@ -221,6 +227,9 @@ export const newAppFile2: AppFile2 = {
 };
 
 const [useAppData, SharedAppDataProvider] = createStateContext<AppFile2>(newAppFile2);
+const [useAppImageAgents, SharedAppImageAgentsProvider] = createStateContext(appImageAgents);
+
 
 export * from "./models";
 export { useAppData, SharedAppDataProvider };
+export { useAppImageAgents, SharedAppImageAgentsProvider };
