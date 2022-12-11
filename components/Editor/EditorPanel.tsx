@@ -1836,7 +1836,7 @@ export default function EditorPanel() {
               }}
             >
               {appCaps.map((cap) =>
-                appData.container?.cap_add?.includes(cap) ? null : (
+                appData.container?.cap_add instanceof Array && appData.container?.cap_add?.includes(cap) ? null : (
                   <option key={cap} value={cap}>
                     {cap}
                   </option>
