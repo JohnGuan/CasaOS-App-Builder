@@ -12,8 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
 import AppStoreControl from "../AppFiles/AppStoreControl";
-import ImportButton from "../AppFiles/ImportButton";
-import NewButton from "../AppFiles/NewButton";
+import PushButton from "../AppFiles/PushButton";
 import SaveButton from "../AppFiles/SaveButton";
 
 export default function Navbar(props: BoxProps) {
@@ -33,11 +32,9 @@ export default function Navbar(props: BoxProps) {
         </Heading>
         <Flex justify="space-between" flex="1">
           <ButtonGroup variant="link" spacing="8"></ButtonGroup>
-          <HStack spacing="3">
-            <NewButton />
-            <ImportButton />
+          <HStack spacing="0.5rem">
             <SaveButton />
-            <AppStoreControl />
+            <PushButton />
             <IconButton
               aria-label={"Switch to " + (colorMode === "dark" ? "light" : "dark") + " mode"}
               icon={colorMode === "dark" ? <MdDarkMode /> : <MdLightMode />}

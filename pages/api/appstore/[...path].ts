@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { omit } from "lodash";
 
 const baseURL = process.env.APP_STORE_BASE_URL || "http://192.168.2.11:8091";
 
@@ -25,9 +26,10 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const token = await getToken();
-
   const url = new URL(req.query.path?.join("/"),baseURL).href;
   console.log("url:", url);
+  const searchParams = new URLSearchParams(omit(req.query, "path")).toString();
+  console.log("searchParams:", searchParams);
   const requestOptions = {
     method: req.method,
     headers: {
@@ -38,6 +40,6 @@ export default async function handler(
   };
   console.log("requestOptions:", requestOptions);
   
-  const response = await fetch(url, requestOptions);
+  const response = await fetch([url,searchParams].join("?"), requestOptions);
   res.status(response.status).send(await response.text());
 }

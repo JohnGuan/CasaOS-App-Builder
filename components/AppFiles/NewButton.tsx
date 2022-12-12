@@ -12,12 +12,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { HiDocument } from "react-icons/hi2";
-import { useAppData, newAppFile2 } from "../../modules/CasaOSAppFile";
+import { useAppData, newAppFile2, useCurrentAppID } from "../../modules/CasaOSAppFile";
 
 export default function NewButton(props: ButtonProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
   const [appData, setAppData] = useAppData();
+  const [currentAppID, setCurrentAppID] = useCurrentAppID();
 
   return (
     <>
@@ -41,7 +42,7 @@ export default function NewButton(props: ButtonProps) {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              The data currently in the editor will be cleared.
+              The data currently in the editor will be lost.
               <br />
               <Text as="b">You can't undo this action afterwards!</Text>
             </AlertDialogBody>
@@ -55,6 +56,7 @@ export default function NewButton(props: ButtonProps) {
                 ml={3}
                 onClick={() => {
                   setAppData(newAppFile2);
+                  setCurrentAppID(-1);
                   onClose();
                 }}
               >

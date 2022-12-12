@@ -18,6 +18,8 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
+  Radio,
+  RadioGroup,
   Select,
   Switch,
   Tag,
@@ -25,6 +27,7 @@ import {
   TagLabel,
   Text,
   Textarea,
+  Tooltip,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -48,6 +51,9 @@ import {
   useAppImageAgents,
 } from "../../modules/CasaOSAppFile";
 import AppFileViewer from "../AppFiles/AppFileViewer";
+import OpenButton from "../AppFiles/OpenButton";
+import NewButton from "../AppFiles/NewButton";
+import AppFileSidebar from "../AppFiles/AppFileSidebar";
 
 export default function EditorPanel() {
   const [appImageAgents, setAppImageAgents] = useAppImageAgents();
@@ -65,6 +71,10 @@ export default function EditorPanel() {
 
   return (
     <Flex direction="row" height="100%">
+      <Box flex="1" paddingX="1rem" maxWidth="16rem" height="100%" overflowY="scroll">
+        <AppFileSidebar />
+      </Box>
+
       <Box flex="1" paddingX="1rem" height="100%" overflowY="scroll">
         <FormControl>
           <FormLabel>Version</FormLabel>
@@ -81,7 +91,9 @@ export default function EditorPanel() {
           </Select>
           <FormHelperText>App File Version</FormHelperText>
         </FormControl>
+
         <br />
+
         <FormControl>
           <FormLabel>Title</FormLabel>
           <Input
@@ -2149,6 +2161,8 @@ export default function EditorPanel() {
           </FormControl>
         </FormControl>
       </Box>
+
+
       <Box flex="1" height="100%" overflowY="scroll">
         <AppFileViewer />
       </Box>

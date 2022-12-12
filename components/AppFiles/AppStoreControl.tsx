@@ -165,7 +165,7 @@ export default function AppStoreControl() {
             onPullOpen();
           }}
         >
-          Pull from App Store
+          Pull from local App Store
           <AlertDialog
             isOpen={isPullOpen}
             leastDestructiveRef={cancelPullRef}
@@ -174,7 +174,7 @@ export default function AppStoreControl() {
             <AlertDialogOverlay>
               <AlertDialogContent>
                 <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                  Pull to local App Store
+                  Pull from local App Store
                 </AlertDialogHeader>
 
                 <AlertDialogBody>

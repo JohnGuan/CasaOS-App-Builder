@@ -1,10 +1,11 @@
 import { useRef } from "react";
 import { Button, ButtonProps } from "@chakra-ui/react";
 import { HiDocumentArrowUp } from "react-icons/hi2";
-import { AppFile1, AppFile2, fillAppFile1ToAppData, fillAppFile2ToAppData, useAppData } from "../../modules/CasaOSAppFile";
+import { AppFile1, AppFile2, fillAppFile1ToAppData, fillAppFile2ToAppData, useAppData, useCurrentAppID } from "../../modules/CasaOSAppFile";
 
-export default function ImportButton(props: ButtonProps) {
+export default function OpenButton(props: ButtonProps) {
   const [appData, setAppData] = useAppData();
+  const [currentAppID, setCurrentAppID] = useCurrentAppID();
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -24,6 +25,9 @@ export default function ImportButton(props: ButtonProps) {
           }
           console.log("data", data);
           console.log("appData", appData);
+
+          setCurrentAppID(-1);
+          console.log("currentAppID", currentAppID);
         }
       };
       reader.readAsText(file);
@@ -42,7 +46,7 @@ export default function ImportButton(props: ButtonProps) {
         onClick={() => fileInputRef.current?.click()}
         {...props}
       >
-        Import
+        Open
       </Button>
       <input
         type="file"

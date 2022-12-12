@@ -13,7 +13,7 @@ export default function JSONViewer() {
       language="json"
       showLineNumbers
       style={colorMode === "dark" ? atomOneDark : atomOneLight}
-      customStyle={{ height: "100%" }}
+      customStyle={{ height: "100%", borderRadius: "0.5rem" }}
     >
       {json}
     </SyntaxHighlighter>

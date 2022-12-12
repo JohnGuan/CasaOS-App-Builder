@@ -352,11 +352,49 @@ export function fillAppFile2ToAppData(
   };
 }
 
+export function updateAppStoreAppList(setAppStoreAppList: Function) {
+  console.log("Pull appStoreAppList from local App Store");
+  fetch("/api/appstore/v2/app/newlist?size=1000")
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+      var appList;
+      if (result.data) {
+        appList = [
+          ...result.data.community.map((app) => {
+            app.type = 2;
+            return app;
+          }),
+          ...result.data.list.map((app) => {
+            app.type = 0;
+            return app;
+          }),
+          ...result.data.recommend.map((app) => {
+            app.type = 1;
+            return app;
+          }),
+        ];
+        console.log("appList", appList);
+        appList.sort((a, b) => a.id - b.id);
+        setAppStoreAppList(appList);
+      }
+    });
+}
+
 const [useAppData, SharedAppDataProvider] =
   createStateContext<AppFile2>(newAppFile2);
 const [useAppImageAgents, SharedAppImageAgentsProvider] =
   createStateContext(appImageAgents);
+const [useCurrentAppID, SharedCurrentAppIDProvider] =
+  createStateContext(-1);
+const [useCurrentAppType, SharedCurrentAppType] =
+  createStateContext(0);
+const [useAppStoreAppList, SharedAppStoreAppListProvider] =
+  createStateContext<any[]>([]);
 
 export * from "./models";
 export { useAppData, SharedAppDataProvider };
 export { useAppImageAgents, SharedAppImageAgentsProvider };
+export { useCurrentAppID, SharedCurrentAppIDProvider };
+export { useCurrentAppType, SharedCurrentAppType };
+export { useAppStoreAppList, SharedAppStoreAppListProvider };
