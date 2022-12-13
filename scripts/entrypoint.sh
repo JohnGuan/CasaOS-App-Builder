@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo -n "Setting up MariaDB..."
 export MYSQL_DATABASE="casa_server"
 export MYSQL_USER="casaosapi"
