@@ -105,7 +105,7 @@ export default function EditorPanel() {
               })
             }
           />
-          <FormHelperText>e.g. "CasaOS"</FormHelperText>
+          <FormHelperText>{`e.g. "CasaOS"`}</FormHelperText>
         </FormControl>
         <br />
         <FormControl>
@@ -119,7 +119,7 @@ export default function EditorPanel() {
               })
             }
           />
-          <FormHelperText>e.g. "casaos"</FormHelperText>
+          <FormHelperText>{`e.g. "casaos"`}</FormHelperText>
         </FormControl>
         <br />
         <FormControl>
@@ -190,7 +190,7 @@ export default function EditorPanel() {
               </Button>
             </InputRightElement>
           </InputGroup>
-          <FormHelperText>e.g. "https://casaos.com/icon.png"</FormHelperText>
+          <FormHelperText>{`e.g. "https://casaos.com/icon.png"`}</FormHelperText>
         </FormControl>
         <br />
         <FormControl>
@@ -2063,7 +2063,7 @@ export default function EditorPanel() {
           </FormLabel>
           {appData.tips?.before_install?.length ? (
             appData.tips?.before_install?.map((tip, index) => (
-              <HStack spacing="0.5rem" marginBottom="0.5rem">
+              <HStack key={index} spacing="0.5rem" marginBottom="0.5rem">
                 <FormControl key={index}>
                   <FormLabel>Content</FormLabel>
                   <Input

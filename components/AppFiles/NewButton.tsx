@@ -44,7 +44,7 @@ export default function NewButton(props: ButtonProps) {
             <AlertDialogBody>
               The data currently in the editor will be lost.
               <br />
-              <Text as="b">You can't undo this action afterwards!</Text>
+              <Text as="b">{"You can't undo this action afterwards!"}</Text>
             </AlertDialogBody>
 
             <AlertDialogFooter>

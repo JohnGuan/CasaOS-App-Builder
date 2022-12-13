@@ -62,6 +62,7 @@ export default function PushButton(props: ButtonProps) {
               duration: 3000,
               isClosable: true,
             });
+            setCurrentAppID(JSON.parse(result).data.id || -1);
             updateAppStoreAppList(setAppStoreAppList);
           })
           .catch((error) => {

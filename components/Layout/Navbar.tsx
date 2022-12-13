@@ -11,7 +11,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
-import AppStoreControl from "../AppFiles/AppStoreControl";
 import PushButton from "../AppFiles/PushButton";
 import SaveButton from "../AppFiles/SaveButton";
 
@@ -26,23 +25,28 @@ export default function Navbar(props: BoxProps) {
       {...props}
     >
       <Container maxW="8xl" paddingY="1rem">
-      <HStack spacing="10" justify="space-between">
-        <Heading as="h1" size="lg">
-          CasaOS App Builder
-        </Heading>
-        <Flex justify="space-between" flex="1">
-          <ButtonGroup variant="link" spacing="8"></ButtonGroup>
-          <HStack spacing="0.5rem">
-            <SaveButton />
-            <PushButton />
-            <IconButton
-              aria-label={"Switch to " + (colorMode === "dark" ? "light" : "dark") + " mode"}
-              icon={colorMode === "dark" ? <MdDarkMode /> : <MdLightMode />}
-              onClick={toggleColorMode}
-            />
-          </HStack>
-        </Flex>
-      </HStack>
+        <HStack spacing="10" justify="space-between">
+          <Heading as="h1" size="lg">
+            CasaOS App Builder
+          </Heading>
+          <Flex justify="space-between" flex="1">
+            <ButtonGroup spacing="0.5rem">
+              <IconButton
+                aria-label={
+                  "Switch to " +
+                  (colorMode === "dark" ? "light" : "dark") +
+                  " mode"
+                }
+                icon={colorMode === "dark" ? <MdDarkMode /> : <MdLightMode />}
+                onClick={toggleColorMode}
+              />
+            </ButtonGroup>
+            <HStack spacing="0.5rem">
+              <SaveButton />
+              <PushButton />
+            </HStack>
+          </Flex>
+        </HStack>
       </Container>
     </Box>
   );
