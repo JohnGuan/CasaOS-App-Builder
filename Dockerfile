@@ -91,4 +91,4 @@ ENV PORT 3000
 VOLUME ["/var/lib/mysql"]
 
 CMD []
-ENTRYPOINT ["./scripts/entrypoint.sh"]
+ENTRYPOINT ["/scripts/entrypoint.sh"]
