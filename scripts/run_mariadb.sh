@@ -98,4 +98,5 @@ do
 	fi
 done
 
-nohup /usr/bin/mysqld --user=mysql --console --skip-name-resolve --skip-networking=0 $@ &
+### Modified by JohnGuan to run in background
+nohup /usr/bin/mysqld --user=mysql --console --skip-name-resolve --skip-networking=0 "$@" &

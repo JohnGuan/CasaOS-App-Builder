@@ -1,37 +1,46 @@
 #!/bin/sh
 
-echo -n "Setting up MariaDB..."
+set -e
+
+echo "Setting up MariaDB..."
 export MYSQL_DATABASE="casa_server"
 export MYSQL_USER="casaosapi"
 export MYSQL_PASSWORD="casaosapi"
 export MYSQL_ROOT_PASSWORD="casaosapi"
 export MYSQL_CHARSET="utf8-mb4"
-echo "Done!"
+echo "Setting up MariaDB done!"
 
 
-echo -n "Starting MariaDB..."
-sh /scripts/run_mariadb.sh
-echo "Done!"
+echo "Starting MariaDB..."
+# shellcheck source=/dev/null
+. /scripts/run_mariadb.sh
+echo "Started MariaDB!"
 
 
-echo -n "Importing databases..."
-sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"' < /sql/databases.sql
-echo "Done!"
+echo "Importing databases..."
+while true
+do
+  sleep 1
+  mysql -uroot -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE" < /sql/casa_server.sql && break
+  echo "Waiting for MariaDB to start..."
+done
+echo "Importing databases done!"
 
 
-echo -n "Setting up CasaOS-API"
+
+echo "Setting up CasaOS-API"
 export MYSQLURL="127.0.0.1:3306"
 export MYSQLUSER="root"
 export MYSQLPASSWORD="casaosapi"
-echo "Done!"
+echo "Setting up CasaOS-API done!"
 
 
-echo -n "Starting CasaOS-API..."
+echo "Starting CasaOS-API..."
 nohup /go/bin/casaos-api &
-echo "Done!"
+echo "Started CasaOS-API!"
 
 
-echo -n "Setting up CasaOS-App-Builder"
+echo "Setting up CasaOS-App-Builder"
 export APP_STORE_BASE_URL="http://localhost:8091"
 
 
