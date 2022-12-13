@@ -10,7 +10,7 @@ echo "Done!"
 
 
 echo -n "Starting MariaDB..."
-nohup /scripts/run_mariadb.sh 2>&1 &
+sh /scripts/run_mariadb.sh
 echo "Done!"
 
 
