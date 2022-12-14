@@ -85,7 +85,7 @@ RUN mkdir /docker-entrypoint-initdb.d && \
 
 COPY CasaOS-API/sql/ /sql/
 
-EXPOSE 3000
+EXPOSE 3000 8091
 ENV PORT 3000
 
 VOLUME ["/var/lib/mysql"]

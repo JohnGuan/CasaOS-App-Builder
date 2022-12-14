@@ -3,6 +3,7 @@ import {
   BoxProps,
   ButtonGroup,
   Container,
+  Divider,
   Flex,
   Heading,
   HStack,
@@ -31,6 +32,12 @@ export default function Navbar(props: BoxProps) {
           </Heading>
           <Flex justify="space-between" flex="1">
             <ButtonGroup spacing="0.5rem">
+              
+            </ButtonGroup>
+            <HStack spacing="0.5rem">
+              <SaveButton />
+              <PushButton />
+              <Divider orientation="vertical" />
               <IconButton
                 aria-label={
                   "Switch to " +
@@ -40,10 +47,6 @@ export default function Navbar(props: BoxProps) {
                 icon={colorMode === "dark" ? <MdDarkMode /> : <MdLightMode />}
                 onClick={toggleColorMode}
               />
-            </ButtonGroup>
-            <HStack spacing="0.5rem">
-              <SaveButton />
-              <PushButton />
             </HStack>
           </Flex>
         </HStack>

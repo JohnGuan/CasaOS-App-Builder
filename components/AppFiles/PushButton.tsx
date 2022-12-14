@@ -34,10 +34,10 @@ export default function PushButton(props: ButtonProps) {
             ? appData.thumbnail
             : appImageAgents.thumbnail,
           screenshots: appData.screenshots
-            ? appData.screenshots.map((screenshot) =>
+            ? appData.screenshots.map((screenshot, i) =>
                 screenshot.startsWith("http")
                   ? screenshot
-                  : appImageAgents.screenshots[0]
+                  : appImageAgents.screenshots[i]
               )
             : [],
           latest_update_date: Math.round(

@@ -155,7 +155,7 @@ export default function EditorPanel() {
                 }
               }}
             />
-            <InputRightElement width="5rem">
+            <InputRightElement width="min-content" paddingRight="0.25rem">
               <Button
                 colorScheme="blue"
                 size="sm"
@@ -186,7 +186,7 @@ export default function EditorPanel() {
                   input.remove();
                 }}
               >
-                Upload
+                Select
               </Button>
             </InputRightElement>
           </InputGroup>
@@ -261,7 +261,7 @@ export default function EditorPanel() {
                 }
               }}
             />
-            <InputRightElement width="5rem">
+            <InputRightElement width="min-content" paddingRight="0.25rem">
               <Button
                 colorScheme="blue"
                 size="sm"
@@ -293,7 +293,7 @@ export default function EditorPanel() {
                   input.remove();
                 }}
               >
-                Upload
+                Select
               </Button>
             </InputRightElement>
           </InputGroup>
@@ -382,7 +382,7 @@ export default function EditorPanel() {
                     }
                   }}
                 />
-                <InputRightElement width="7.25rem">
+                <InputRightElement width="min-content" paddingRight="0.25rem">
                   <Button
                     colorScheme="blue"
                     size="sm"
@@ -423,7 +423,7 @@ export default function EditorPanel() {
                       input.remove();
                     }}
                   >
-                    Upload
+                    Select
                   </Button>
                   <IconButton
                     aria-label="Delete Screenshot"
