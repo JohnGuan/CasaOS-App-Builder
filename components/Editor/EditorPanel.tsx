@@ -55,6 +55,16 @@ import OpenButton from "../AppFiles/OpenButton";
 import NewButton from "../AppFiles/NewButton";
 import AppFileSidebar from "../AppFiles/AppFileSidebar";
 
+function Important() {
+  return (
+    <Tooltip label="Required" placement="top">
+      <Text as="b" color="red" width="1rem">
+        *
+      </Text>
+    </Tooltip>
+  );
+}
+
 export default function EditorPanel() {
   const [appImageAgents, setAppImageAgents] = useAppImageAgents();
   const [appData, setAppData] = useAppData();
@@ -71,13 +81,21 @@ export default function EditorPanel() {
 
   return (
     <Flex direction="row" height="100%">
-      <Box flex="1" paddingX="1rem" maxWidth="16rem" height="100%" overflowY="scroll">
+      <Box
+        flex="1"
+        paddingX="1rem"
+        maxWidth="16rem"
+        height="100%"
+        overflowY="scroll"
+      >
         <AppFileSidebar />
       </Box>
 
       <Box flex="1" paddingX="1rem" height="100%" overflowY="scroll">
         <FormControl>
-          <FormLabel>Version</FormLabel>
+          <FormLabel>
+            <Important /> Version
+          </FormLabel>
           <Select
             value={appData.version}
             onChange={(e) =>
@@ -95,7 +113,9 @@ export default function EditorPanel() {
         <br />
 
         <FormControl>
-          <FormLabel>Title</FormLabel>
+          <FormLabel>
+            <Important /> Title
+          </FormLabel>
           <Input
             value={appData.title}
             onChange={(e) =>
@@ -109,7 +129,9 @@ export default function EditorPanel() {
         </FormControl>
         <br />
         <FormControl>
-          <FormLabel>Name</FormLabel>
+          <FormLabel>
+            <Important /> Name
+          </FormLabel>
           <Input
             value={appData.name}
             onChange={(e) =>
@@ -123,7 +145,9 @@ export default function EditorPanel() {
         </FormControl>
         <br />
         <FormControl>
-          <FormLabel>Icon</FormLabel>
+          <FormLabel>
+            <Important /> Icon
+          </FormLabel>
           <InputGroup>
             {appData.icon ? (
               <InputLeftElement>
@@ -194,7 +218,9 @@ export default function EditorPanel() {
         </FormControl>
         <br />
         <FormControl>
-          <FormLabel>Tagline</FormLabel>
+          <FormLabel>
+            <Important /> Tagline
+          </FormLabel>
           <Input
             value={appData.tagline}
             onChange={(e) =>
@@ -210,7 +236,9 @@ export default function EditorPanel() {
         </FormControl>
         <br />
         <FormControl>
-          <FormLabel>Overview</FormLabel>
+          <FormLabel>
+            <Important /> Overview
+          </FormLabel>
           <Textarea
             value={appData.overview}
             onChange={(e) =>
@@ -226,7 +254,9 @@ export default function EditorPanel() {
         </FormControl>
         <br />
         <FormControl>
-          <FormLabel>Thumbnail</FormLabel>
+          <FormLabel>
+            <Important /> Thumbnail
+          </FormLabel>
           {appData.thumbnail ? (
             <AspectRatio
               marginY="0.5rem"
@@ -302,7 +332,7 @@ export default function EditorPanel() {
         <br />
         <FormControl>
           <FormLabel>
-            Screenshots{" "}
+            <Important /> Screenshots{" "}
             <Button
               colorScheme="blue"
               size="xs"
@@ -336,12 +366,22 @@ export default function EditorPanel() {
               Add
             </Button>
           </FormLabel>
-          {
-            appData.screenshots?.length ? (
-              <Flex flexDirection="row" width="100%" justifyContent="center" marginBottom="0.5rem">
-                {appData.screenshots.map((screenshot, index) => (
-                  appData.screenshots?.[index] || appImageAgents.screenshots[index] ?
-                  (<AspectRatio key={index} ratio={16 / 9} width="24rem" marginLeft={index > 0 ? "0.5rem" : "0"}>
+          {appData.screenshots?.length ? (
+            <Flex
+              flexDirection="row"
+              width="100%"
+              justifyContent="center"
+              marginBottom="0.5rem"
+            >
+              {appData.screenshots.map((screenshot, index) =>
+                appData.screenshots?.[index] ||
+                appImageAgents.screenshots[index] ? (
+                  <AspectRatio
+                    key={index}
+                    ratio={16 / 9}
+                    width="24rem"
+                    marginLeft={index > 0 ? "0.5rem" : "0"}
+                  >
                     <Image
                       borderRadius="0.5rem"
                       src={
@@ -350,11 +390,11 @@ export default function EditorPanel() {
                           : appImageAgents.screenshots[index]
                       }
                     />
-                  </AspectRatio>) : null
-                ))}
-              </Flex>
-            ) : null
-          }
+                  </AspectRatio>
+                ) : null
+              )}
+            </Flex>
+          ) : null}
           {appData.screenshots?.length ? (
             appData.screenshots.map((screenshot, index) => (
               <InputGroup
@@ -461,7 +501,9 @@ export default function EditorPanel() {
         </FormControl>
         <br />
         <FormControl>
-          <FormLabel>Category</FormLabel>
+          <FormLabel>
+            <Important /> Category
+          </FormLabel>
           <VStack alignItems="start" marginBottom="0.5rem">
             {appData.category?.length || false ? (
               appData.category?.map((category, index) => (
@@ -515,7 +557,9 @@ export default function EditorPanel() {
         </FormControl>
         <br />
         <FormControl>
-          <FormLabel>Developer</FormLabel>
+          <FormLabel>
+            <Important /> Developer
+          </FormLabel>
           <HStack spacing="0.5rem">
             <FormControl>
               <FormLabel>Name</FormLabel>
@@ -721,1117 +765,1218 @@ export default function EditorPanel() {
         </FormControl>
         <br />
         <FormControl>
-          <FormLabel>Container</FormLabel>
-          <FormControl>
-            <FormLabel>Image</FormLabel>
-            <Input
-              value={appData.container?.image}
-              onChange={(e) => {
-                setAppData({
-                  ...appData,
-                  container: {
-                    ...appData.container,
-                    image: e.target.value,
-                  },
-                });
-              }}
-            />
-            <FormHelperText>
-              example: filebrowser/filebrowser:latest
-            </FormHelperText>
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>Shell</FormLabel>
-            <Input
-              value={appData.container?.shell}
-              onChange={(e) => {
-                setAppData({
-                  ...appData,
-                  container: {
-                    ...appData.container,
-                    shell: e.target.value,
-                  },
-                });
-              }}
-            />
-            <FormHelperText>example: /bin/bash</FormHelperText>
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>Privileged</FormLabel>
-            <Switch
-              isChecked={appData.container?.privileged}
-              onChange={(e) =>
-                setAppData({
-                  ...appData,
-                  container: {
-                    ...appData.container,
-                    privileged: e.target.checked,
-                  },
-                })
-              }
-            />
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>Health Check</FormLabel>
-            <Input
-              value={appData.container?.health_check}
-              onChange={(e) => {
-                setAppData({
-                  ...appData,
-                  container: {
-                    ...appData.container,
-                    health_check: e.target.value,
-                  },
-                });
-              }}
-            />
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>Network</FormLabel>
-            <Select
-              placeholder="Select Network"
-              value={appData.container?.network_model}
-              onChange={(e) =>
-                setAppData({
-                  ...appData,
-                  container: {
-                    ...appData.container,
-                    network_model: e.target.value,
-                  },
-                })
-              }
-            >
-              <option value="host">host</option>
-              <option value="bridge">bridge</option>
-            </Select>
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>Web UI</FormLabel>
-            <HStack spacing="0.5rem">
-              <FormControl>
-                <FormLabel>HTTP</FormLabel>
-                <Input
-                  value={appData.container?.web_ui?.http}
-                  onChange={(e) => {
-                    setAppData({
-                      ...appData,
-                      container: {
-                        ...appData.container,
-                        web_ui: {
-                          ...appData.container?.web_ui,
-                          http: e.target.value,
+          <FormLabel>
+            <Important /> Container
+          </FormLabel>
+          <Box border="1px" borderRadius="0.5rem" padding="0.5rem">
+            <FormControl>
+              <FormLabel>Image</FormLabel>
+              <Input
+                value={appData.container?.image}
+                onChange={(e) => {
+                  setAppData({
+                    ...appData,
+                    container: {
+                      ...appData.container,
+                      image: e.target.value,
+                    },
+                  });
+                }}
+              />
+              <FormHelperText>
+                example: filebrowser/filebrowser:latest
+              </FormHelperText>
+            </FormControl>
+            <br />
+            <FormControl>
+              <FormLabel>Shell</FormLabel>
+              <Input
+                value={appData.container?.shell}
+                onChange={(e) => {
+                  setAppData({
+                    ...appData,
+                    container: {
+                      ...appData.container,
+                      shell: e.target.value,
+                    },
+                  });
+                }}
+              />
+              <FormHelperText>example: /bin/bash</FormHelperText>
+            </FormControl>
+            <br />
+            <FormControl>
+              <FormLabel>Privileged</FormLabel>
+              <Switch
+                isChecked={appData.container?.privileged}
+                onChange={(e) =>
+                  setAppData({
+                    ...appData,
+                    container: {
+                      ...appData.container,
+                      privileged: e.target.checked,
+                    },
+                  })
+                }
+              />
+            </FormControl>
+            <br />
+            <FormControl>
+              <FormLabel>Health Check</FormLabel>
+              <Input
+                value={appData.container?.health_check}
+                onChange={(e) => {
+                  setAppData({
+                    ...appData,
+                    container: {
+                      ...appData.container,
+                      health_check: e.target.value,
+                    },
+                  });
+                }}
+              />
+            </FormControl>
+            <br />
+            <FormControl>
+              <FormLabel>Network</FormLabel>
+              <Select
+                placeholder="Select Network"
+                value={appData.container?.network_model}
+                onChange={(e) =>
+                  setAppData({
+                    ...appData,
+                    container: {
+                      ...appData.container,
+                      network_model: e.target.value,
+                    },
+                  })
+                }
+              >
+                <option value="host">host</option>
+                <option value="bridge">bridge</option>
+              </Select>
+            </FormControl>
+            <br />
+            <FormControl>
+              <FormLabel>Web UI</FormLabel>
+              <HStack spacing="0.5rem">
+                <FormControl>
+                  <FormLabel>HTTP</FormLabel>
+                  <Input
+                    value={appData.container?.web_ui?.http}
+                    onChange={(e) => {
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          web_ui: {
+                            ...appData.container?.web_ui,
+                            http: e.target.value,
+                          },
                         },
-                      },
-                    });
-                  }}
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>HTTPS</FormLabel>
-                <Input
-                  value={appData.container?.web_ui?.https}
-                  onChange={(e) => {
-                    setAppData({
-                      ...appData,
-                      container: {
-                        ...appData.container,
-                        web_ui: {
-                          ...appData.container?.web_ui,
-                          https: e.target.value,
+                      });
+                    }}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>HTTPS</FormLabel>
+                  <Input
+                    value={appData.container?.web_ui?.https}
+                    onChange={(e) => {
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          web_ui: {
+                            ...appData.container?.web_ui,
+                            https: e.target.value,
+                          },
                         },
-                      },
-                    });
-                  }}
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Path</FormLabel>
-                <Input
-                  value={appData.container?.web_ui?.path}
-                  onChange={(e) => {
-                    setAppData({
-                      ...appData,
-                      container: {
-                        ...appData.container,
-                        web_ui: {
-                          ...appData.container?.web_ui,
-                          path: e.target.value,
+                      });
+                    }}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Path</FormLabel>
+                  <Input
+                    value={appData.container?.web_ui?.path}
+                    onChange={(e) => {
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          web_ui: {
+                            ...appData.container?.web_ui,
+                            path: e.target.value,
+                          },
                         },
-                      },
-                    });
+                      });
+                    }}
+                  />
+                </FormControl>
+              </HStack>
+              <FormHelperText>
+                Container port and path to access Web UI
+              </FormHelperText>
+            </FormControl>
+            <br />
+            <FormControl>
+              <FormLabel>
+                Ports{" "}
+                <Button
+                  size="xs"
+                  colorScheme="blue"
+                  onClick={() => {
+                    const ports = appData.container?.ports;
+                    if (ports) {
+                      ports.push({
+                        container: "",
+                        host: "",
+                        type: AppFile2ContainerPortsTypeEnum.Tcp,
+                        allocation:
+                          AppFile2ContainerPortsAllocationEnum.Automatic,
+                        configurable:
+                          AppFile2ContainerPortsConfigurableEnum.Basic,
+                        description: "",
+                      });
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          ports: ports,
+                        },
+                      });
+                    } else {
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          ports: [
+                            {
+                              container: "",
+                              host: "",
+                              type: AppFile2ContainerPortsTypeEnum.Tcp,
+                              allocation:
+                                AppFile2ContainerPortsAllocationEnum.Automatic,
+                              configurable:
+                                AppFile2ContainerPortsConfigurableEnum.Basic,
+                              description: "",
+                            },
+                          ],
+                        },
+                      });
+                    }
                   }}
-                />
-              </FormControl>
-            </HStack>
-            <FormHelperText>
-              Container port and path to access Web UI
-            </FormHelperText>
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>
-              Ports{" "}
-              <Button
-                size="xs"
-                colorScheme="blue"
-                onClick={() => {
-                  const ports = appData.container?.ports;
-                  if (ports) {
-                    ports.push({
-                      container: "",
-                      host: "",
-                      type: AppFile2ContainerPortsTypeEnum.Tcp,
-                      allocation:
-                        AppFile2ContainerPortsAllocationEnum.Automatic,
-                      configurable:
-                        AppFile2ContainerPortsConfigurableEnum.Basic,
-                      description: "",
-                    });
-                    setAppData({
-                      ...appData,
-                      container: {
-                        ...appData.container,
-                        ports: ports,
-                      },
-                    });
-                  } else {
-                    setAppData({
-                      ...appData,
-                      container: {
-                        ...appData.container,
-                        ports: [
-                          {
-                            container: "",
-                            host: "",
-                            type: AppFile2ContainerPortsTypeEnum.Tcp,
-                            allocation:
-                              AppFile2ContainerPortsAllocationEnum.Automatic,
-                            configurable:
-                              AppFile2ContainerPortsConfigurableEnum.Basic,
-                            description: "",
-                          },
-                        ],
-                      },
-                    });
-                  }
-                }}
-              >
-                Add
-              </Button>
-            </FormLabel>
-            {appData.container?.ports?.length || false ? (
-              appData.container?.ports?.map((port, index) => (
-                <HStack key={index} spacing="0.5rem" marginBottom="1rem">
-                  <Box flexGrow="1" paddingLeft="0.5rem" borderLeft="2px">
-                    <HStack spacing="0.5rem" marginBottom="0.5rem">
-                      <FormControl>
-                        <FormLabel>Container</FormLabel>
-                        <Input
-                          size="sm"
-                          type="number"
-                          value={port.container}
-                          onChange={(e) => {
-                            const ports = appData.container?.ports;
-                            if (ports) {
-                              ports[index].container = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  ports: ports,
-                                },
-                              });
-                            }
-                          }}
-                        />
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>Host</FormLabel>
-                        <Input
-                          size="sm"
-                          type="number"
-                          value={port.host}
-                          onChange={(e) => {
-                            const ports = appData.container?.ports;
-                            if (ports) {
-                              ports[index].host = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  ports: ports,
-                                },
-                              });
-                            }
-                          }}
-                        />
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>Type</FormLabel>
-                        <Select
-                          size="sm"
-                          value={port.type}
-                          onChange={(e) => {
-                            const ports = appData.container?.ports;
-                            if (ports) {
-                              ports[index].type = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  ports: ports,
-                                },
-                              });
-                            }
-                          }}
-                        >
-                          {(
-                            Object.keys(
-                              AppFile2ContainerPortsTypeEnum
-                            ) as Array<
-                              keyof typeof AppFile2ContainerPortsTypeEnum
-                            >
-                          ).map((type) => (
-                            <option
-                              key={type}
-                              value={AppFile2ContainerPortsTypeEnum[type]}
-                            >
-                              {AppFile2ContainerPortsTypeEnum[type]}
-                            </option>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </HStack>
-                    <HStack spacing="0.5rem">
-                      <FormControl>
-                        <FormLabel>Allocation</FormLabel>
-                        <Select
-                          size="sm"
-                          value={port.allocation}
-                          onChange={(e) => {
-                            const ports = appData.container?.ports;
-                            if (ports) {
-                              ports[index].allocation = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  ports: ports,
-                                },
-                              });
-                            }
-                          }}
-                        >
-                          {(
-                            Object.keys(
-                              AppFile2ContainerPortsAllocationEnum
-                            ) as Array<
-                              keyof typeof AppFile2ContainerPortsAllocationEnum
-                            >
-                          ).map((type) => (
-                            <option
-                              key={type}
-                              value={AppFile2ContainerPortsAllocationEnum[type]}
-                            >
-                              {type}
-                            </option>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>Configurable</FormLabel>
-                        <Select
-                          size="sm"
-                          value={port.configurable}
-                          onChange={(e) => {
-                            const ports = appData.container?.ports;
-                            if (ports) {
-                              ports[index].configurable = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  ports: ports,
-                                },
-                              });
-                            }
-                          }}
-                        >
-                          {(
-                            Object.keys(
-                              AppFile2ContainerPortsConfigurableEnum
-                            ) as Array<
-                              keyof typeof AppFile2ContainerPortsConfigurableEnum
-                            >
-                          ).map((type) => (
-                            <option
-                              key={type}
-                              value={
-                                AppFile2ContainerPortsConfigurableEnum[type]
-                              }
-                            >
-                              {type}
-                            </option>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>Description</FormLabel>
-                        <Input
-                          size="sm"
-                          value={port.description}
-                          onChange={(e) => {
-                            const ports = appData.container?.ports;
-                            if (ports) {
-                              ports[index].description = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  ports: ports,
-                                },
-                              });
-                            }
-                          }}
-                        />
-                      </FormControl>
-                    </HStack>
-                  </Box>
-                  <IconButton
-                    aria-label="Delete Port"
-                    icon={<MdDelete />}
-                    height="8.5rem"
-                    onClick={() => {
-                      const ports = appData.container?.ports;
-                      if (ports) {
-                        ports.splice(index, 1);
-                        setAppData({
-                          ...appData,
-                          container: {
-                            ...appData.container,
-                            ports: ports,
-                          },
-                        });
-                      }
-                    }}
-                  />
-                </HStack>
-              ))
-            ) : (
-              <Text>No ports yet.</Text>
-            )}
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>
-              Volumes{" "}
-              <Button
-                size="xs"
-                colorScheme="blue"
-                onClick={() => {
-                  const volumes = appData.container?.volumes;
-                  if (volumes) {
-                    volumes.push({
-                      container: "",
-                      host: "",
-                      mode: AppFile2ContainerVolumesModeEnum.Rw,
-                      allocation:
-                        AppFile2ContainerVolumesAllocationEnum.Automatic,
-                      configurable:
-                        AppFile2ContainerVolumesConfigurableEnum.Basic,
-                      description: "",
-                    });
-                    setAppData({
-                      ...appData,
-                      container: {
-                        ...appData.container,
-                        volumes: volumes,
-                      },
-                    });
-                  } else {
-                    setAppData({
-                      ...appData,
-                      container: {
-                        ...appData.container,
-                        volumes: [
-                          {
-                            container: "",
-                            host: "",
-                            mode: AppFile2ContainerVolumesModeEnum.Rw,
-                            allocation:
-                              AppFile2ContainerVolumesAllocationEnum.Automatic,
-                            configurable:
-                              AppFile2ContainerVolumesConfigurableEnum.Basic,
-                            description: "",
-                          },
-                        ],
-                      },
-                    });
-                  }
-                }}
-              >
-                Add
-              </Button>
-            </FormLabel>
-            {appData.container?.volumes?.length ? (
-              appData.container?.volumes.map((volume, index) => (
-                <HStack
-                  key={index}
-                  spacing="0.5rem"
-                  paddingLeft="0.5rem"
-                  borderLeft="2px"
-                  marginBottom="1rem"
                 >
-                  <Box flex="1">
-                    <HStack spacing="0.5rem" marginBottom="0.5rem">
-                      <FormControl>
-                        <FormLabel>Container</FormLabel>
-                        <Input
-                          size="sm"
-                          value={volume.container}
-                          onChange={(e) => {
-                            const volumes = appData.container?.volumes;
-                            if (volumes) {
-                              volumes[index].container = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  volumes: volumes,
-                                },
-                              });
-                            }
-                          }}
-                        />
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>Host</FormLabel>
-                        <Input
-                          size="sm"
-                          value={volume.host}
-                          onChange={(e) => {
-                            const volumes = appData.container?.volumes;
-                            if (volumes) {
-                              volumes[index].host = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  volumes: volumes,
-                                },
-                              });
-                            }
-                          }}
-                        />
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>Mode</FormLabel>
-                        <Select
-                          size="sm"
-                          value={volume.mode}
-                          onChange={(e) => {
-                            const volumes = appData.container?.volumes;
-                            if (volumes) {
-                              volumes[index].mode = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  volumes: volumes,
-                                },
-                              });
-                            }
-                          }}
-                        >
-                          {(
-                            Object.keys(
-                              AppFile2ContainerVolumesModeEnum
-                            ) as Array<
-                              keyof typeof AppFile2ContainerVolumesModeEnum
-                            >
-                          ).map((type) => (
-                            <option
-                              key={type}
-                              value={AppFile2ContainerVolumesModeEnum[type]}
-                            >
-                              {AppFile2ContainerVolumesModeEnum[type]}
-                            </option>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </HStack>
-                    <HStack spacing="0.5rem">
-                      <FormControl>
-                        <FormLabel>Allocation</FormLabel>
-                        <Select
-                          size="sm"
-                          value={volume.allocation}
-                          onChange={(e) => {
-                            const volumes = appData.container?.volumes;
-                            if (volumes) {
-                              volumes[index].allocation = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  volumes: volumes,
-                                },
-                              });
-                            }
-                          }}
-                        >
-                          {(
-                            Object.keys(
-                              AppFile2ContainerVolumesAllocationEnum
-                            ) as Array<
-                              keyof typeof AppFile2ContainerVolumesAllocationEnum
-                            >
-                          ).map((type) => (
-                            <option
-                              key={type}
-                              value={
-                                AppFile2ContainerVolumesAllocationEnum[type]
+                  Add
+                </Button>
+              </FormLabel>
+              {appData.container?.ports?.length || false ? (
+                appData.container?.ports?.map((port, index) => (
+                  <HStack key={index} spacing="0.5rem" marginBottom="1rem">
+                    <Box flexGrow="1" paddingLeft="0.5rem" borderLeft="2px">
+                      <HStack spacing="0.5rem" marginBottom="0.5rem">
+                        <FormControl>
+                          <FormLabel>Container</FormLabel>
+                          <Input
+                            size="sm"
+                            type="number"
+                            value={port.container}
+                            onChange={(e) => {
+                              const ports = appData.container?.ports;
+                              if (ports) {
+                                ports[index].container = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    ports: ports,
+                                  },
+                                });
                               }
-                            >
-                              {type}
-                            </option>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>Configurable</FormLabel>
-                        <Select
-                          size="sm"
-                          value={volume.configurable}
-                          onChange={(e) => {
-                            const volumes = appData.container?.volumes;
-                            if (volumes) {
-                              volumes[index].configurable = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  volumes: volumes,
-                                },
-                              });
-                            }
-                          }}
-                        >
-                          {(
-                            Object.keys(
-                              AppFile2ContainerVolumesConfigurableEnum
-                            ) as Array<
-                              keyof typeof AppFile2ContainerVolumesConfigurableEnum
-                            >
-                          ).map((type) => (
-                            <option
-                              key={type}
-                              value={
-                                AppFile2ContainerVolumesConfigurableEnum[type]
+                            }}
+                          />
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Host</FormLabel>
+                          <Input
+                            size="sm"
+                            type="number"
+                            value={port.host}
+                            onChange={(e) => {
+                              const ports = appData.container?.ports;
+                              if (ports) {
+                                ports[index].host = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    ports: ports,
+                                  },
+                                });
                               }
-                            >
-                              {type}
-                            </option>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>Description</FormLabel>
-                        <Input
-                          size="sm"
-                          value={volume.description}
-                          onChange={(e) => {
-                            const volumes = appData.container?.volumes;
-                            if (volumes) {
-                              volumes[index].description = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  volumes: volumes,
-                                },
-                              });
-                            }
-                          }}
-                        />
-                      </FormControl>
-                    </HStack>
-                  </Box>
-                  <IconButton
-                    aria-label="Delete Volume"
-                    icon={<MdDelete />}
-                    height="8.5rem"
-                    onClick={() => {
-                      const volumes = appData.container?.volumes;
-                      if (volumes) {
-                        volumes.splice(index, 1);
-                        setAppData({
-                          ...appData,
-                          container: {
-                            ...appData.container,
-                            volumes: volumes,
-                          },
-                        });
-                      }
-                    }}
-                  />
-                </HStack>
-              ))
-            ) : (
-              <Text>No volumes yet.</Text>
-            )}
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>
-              Devices{" "}
-              <Button
-                size="xs"
-                colorScheme="blue"
-                onClick={() => {
-                  const devices = appData.container?.devices;
-                  if (devices) {
-                    devices.push({
-                      container: "",
-                      host: "",
-                      allocation:
-                        AppFile2ContainerDevicesAllocationEnum.Optional,
-                      configurable:
-                        AppFile2ContainerDevicesConfigurableEnum.Basic,
-                      description: "",
-                    });
-                    setAppData({
-                      ...appData,
-                      container: {
-                        ...appData.container,
-                        devices: devices,
-                      },
-                    });
-                  } else {
-                    setAppData({
-                      ...appData,
-                      container: {
-                        ...appData.container,
-                        devices: [
-                          {
-                            container: "",
-                            host: "",
-                            allocation:
-                              AppFile2ContainerDevicesAllocationEnum.Optional,
-                            configurable:
-                              AppFile2ContainerDevicesConfigurableEnum.Basic,
-                            description: "",
-                          },
-                        ],
-                      },
-                    });
-                  }
-                }}
-              >
-                Add
-              </Button>
-            </FormLabel>
-            {appData.container?.devices?.length ? (
-              appData.container.devices.map((device, index) => (
-                <HStack
-                  key={index}
-                  spacing="0.5rem"
-                  marginBottom="1rem"
-                  paddingLeft="0.5rem"
-                  borderLeft="2px"
-                >
-                  <Box flex="1">
-                    <HStack spacing="0.5rem" marginBottom="0.5rem">
-                      <FormControl>
-                        <FormLabel>Container</FormLabel>
-                        <Input
-                          size="sm"
-                          value={device.container}
-                          onChange={(e) => {
-                            const devices = appData.container?.devices;
-                            if (devices) {
-                              devices[index].container = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  devices: devices,
-                                },
-                              });
-                            }
-                          }}
-                        />
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>Host</FormLabel>
-                        <Input
-                          size="sm"
-                          value={device.host}
-                          onChange={(e) => {
-                            const devices = appData.container?.devices;
-                            if (devices) {
-                              devices[index].host = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  devices: devices,
-                                },
-                              });
-                            }
-                          }}
-                        />
-                      </FormControl>
-                    </HStack>
-                    <HStack spacing="0.5rem">
-                      <FormControl>
-                        <FormLabel>Allocation</FormLabel>
-                        <Select
-                          size="sm"
-                          value={device.allocation}
-                          onChange={(e) => {
-                            const devices = appData.container?.devices;
-                            if (devices) {
-                              devices[index].allocation = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  devices: devices,
-                                },
-                              });
-                            }
-                          }}
-                        >
-                          {(
-                            Object.keys(
-                              AppFile2ContainerDevicesAllocationEnum
-                            ) as Array<
-                              keyof typeof AppFile2ContainerDevicesAllocationEnum
-                            >
-                          ).map((type) => (
-                            <option
-                              key={type}
-                              value={
-                                AppFile2ContainerDevicesAllocationEnum[type]
+                            }}
+                          />
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Type</FormLabel>
+                          <Select
+                            size="sm"
+                            value={port.type}
+                            onChange={(e) => {
+                              const ports = appData.container?.ports;
+                              if (ports) {
+                                ports[index].type = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    ports: ports,
+                                  },
+                                });
                               }
-                            >
-                              {type}
-                            </option>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>Configurable</FormLabel>
-                        <Select
-                          size="sm"
-                          value={device.configurable}
-                          onChange={(e) => {
-                            const devices = appData.container?.devices;
-                            if (devices) {
-                              devices[index].configurable = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  devices: devices,
-                                },
-                              });
-                            }
-                          }}
-                        >
-                          {(
-                            Object.keys(
-                              AppFile2ContainerDevicesConfigurableEnum
-                            ) as Array<
-                              keyof typeof AppFile2ContainerDevicesConfigurableEnum
-                            >
-                          ).map((type) => (
-                            <option
-                              key={type}
-                              value={
-                                AppFile2ContainerDevicesConfigurableEnum[type]
+                            }}
+                          >
+                            {(
+                              Object.keys(
+                                AppFile2ContainerPortsTypeEnum
+                              ) as Array<
+                                keyof typeof AppFile2ContainerPortsTypeEnum
+                              >
+                            ).map((type) => (
+                              <option
+                                key={type}
+                                value={AppFile2ContainerPortsTypeEnum[type]}
+                              >
+                                {AppFile2ContainerPortsTypeEnum[type]}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </HStack>
+                      <HStack spacing="0.5rem">
+                        <FormControl>
+                          <FormLabel>Allocation</FormLabel>
+                          <Select
+                            size="sm"
+                            value={port.allocation}
+                            onChange={(e) => {
+                              const ports = appData.container?.ports;
+                              if (ports) {
+                                ports[index].allocation = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    ports: ports,
+                                  },
+                                });
                               }
-                            >
-                              {type}
-                            </option>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>Description</FormLabel>
-                        <Input
-                          size="sm"
-                          value={device.description}
-                          onChange={(e) => {
-                            const devices = appData.container?.devices;
-                            if (devices) {
-                              devices[index].description = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  devices: devices,
-                                },
-                              });
-                            }
-                          }}
-                        />
-                      </FormControl>
-                    </HStack>
-                  </Box>
-                  <IconButton
-                    height="8.5rem"
-                    aria-label="Delete"
-                    icon={<MdDelete />}
-                    onClick={() => {
-                      const devices = appData.container?.devices;
-                      if (devices) {
-                        devices.splice(index, 1);
-                        setAppData({
-                          ...appData,
-                          container: {
-                            ...appData.container,
-                            devices: devices,
-                          },
-                        });
-                      }
-                    }}
-                  />
-                </HStack>
-              ))
-            ) : (
-              <Text>No devices yet.</Text>
-            )}
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>
-              Environment Variables{" "}
-              <Button
-                size="xs"
-                colorScheme="blue"
-                onClick={() => {
-                  const envs = appData.container?.envs;
-                  if (envs) {
-                    envs.push({
-                      key: "",
-                      value: "",
-                      configurable: AppFile2ContainerEnvsConfigurableEnum.Basic,
-                      description: "",
-                    });
-                    setAppData({
-                      ...appData,
-                      container: {
-                        ...appData.container,
-                        envs: envs,
-                      },
-                    });
-                  } else {
-                    setAppData({
-                      ...appData,
-                      container: {
-                        ...appData.container,
-                        envs: [
-                          {
-                            key: "",
-                            value: "",
-                            configurable:
-                              AppFile2ContainerEnvsConfigurableEnum.Basic,
-                            description: "",
-                          },
-                        ],
-                      },
-                    });
-                  }
-                }}
-              >
-                Add
-              </Button>
-            </FormLabel>
-            {appData.container?.envs?.length ? (
-              appData.container.envs.map((env, index) => (
-                <HStack
-                  key={index}
-                  spacing="0.5rem"
-                  marginBottom="1rem"
-                  paddingLeft="0.5rem"
-                  borderLeft="2px"
-                >
-                  <Box flex="1">
-                    <HStack spacing="0.5rem" marginBottom="0.5rem">
-                      <FormControl>
-                        <FormLabel>Key</FormLabel>
-                        <Input
-                          size="sm"
-                          value={env.key}
-                          onChange={(e) => {
-                            const envs = appData.container?.envs;
-                            if (envs) {
-                              envs[index].key = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  envs: envs,
-                                },
-                              });
-                            }
-                          }}
-                        />
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>Value</FormLabel>
-                        <Input
-                          size="sm"
-                          value={env.value}
-                          onChange={(e) => {
-                            const envs = appData.container?.envs;
-                            if (envs) {
-                              envs[index].value = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  envs: envs,
-                                },
-                              });
-                            }
-                          }}
-                        />
-                      </FormControl>
-                    </HStack>
-                    <HStack spacing="0.5rem">
-                      <FormControl>
-                        <FormLabel>Configurable</FormLabel>
-                        <Select
-                          size="sm"
-                          value={env.configurable}
-                          onChange={(e) => {
-                            const envs = appData.container?.envs;
-                            if (envs) {
-                              envs[index].configurable = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  envs: envs,
-                                },
-                              });
-                            }
-                          }}
-                        >
-                          {(
-                            Object.keys(
-                              AppFile2ContainerEnvsConfigurableEnum
-                            ) as Array<
-                              keyof typeof AppFile2ContainerEnvsConfigurableEnum
-                            >
-                          ).map((type) => (
-                            <option
-                              key={type}
-                              value={
-                                AppFile2ContainerEnvsConfigurableEnum[type]
+                            }}
+                          >
+                            {(
+                              Object.keys(
+                                AppFile2ContainerPortsAllocationEnum
+                              ) as Array<
+                                keyof typeof AppFile2ContainerPortsAllocationEnum
+                              >
+                            ).map((type) => (
+                              <option
+                                key={type}
+                                value={
+                                  AppFile2ContainerPortsAllocationEnum[type]
+                                }
+                              >
+                                {type}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Configurable</FormLabel>
+                          <Select
+                            size="sm"
+                            value={port.configurable}
+                            onChange={(e) => {
+                              const ports = appData.container?.ports;
+                              if (ports) {
+                                ports[index].configurable = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    ports: ports,
+                                  },
+                                });
                               }
-                            >
-                              {type}
-                            </option>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>Description</FormLabel>
-                        <Input
-                          size="sm"
-                          value={env.description}
-                          onChange={(e) => {
-                            const envs = appData.container?.envs;
-                            if (envs) {
-                              envs[index].description = e.target.value;
-                              setAppData({
-                                ...appData,
-                                container: {
-                                  ...appData.container,
-                                  envs: envs,
-                                },
-                              });
-                            }
-                          }}
-                        />
-                      </FormControl>
-                    </HStack>
-                  </Box>
-                  <IconButton
-                    aria-label="Delete Environment Variable"
-                    icon={<MdDelete />}
-                    height="8.5rem"
-                    onClick={() => {
-                      const envs = appData.container?.envs;
-                      if (envs) {
-                        envs.splice(index, 1);
-                        setAppData({
-                          ...appData,
-                          container: {
-                            ...appData.container,
-                            envs: envs,
-                          },
-                        });
-                      }
-                    }}
-                  />
-                </HStack>
-              ))
-            ) : (
-              <Text>No environment variables yet.</Text>
-            )}
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>Cap Add</FormLabel>
-            <VStack alignItems="start" marginBottom="0.5rem">
-              {appData.container?.cap_add?.length ? (
-                appData.container.cap_add.map((cap, index) => (
-                  <Tag key={index}>
-                    <TagLabel>{cap}</TagLabel>
-                    <TagCloseButton
+                            }}
+                          >
+                            {(
+                              Object.keys(
+                                AppFile2ContainerPortsConfigurableEnum
+                              ) as Array<
+                                keyof typeof AppFile2ContainerPortsConfigurableEnum
+                              >
+                            ).map((type) => (
+                              <option
+                                key={type}
+                                value={
+                                  AppFile2ContainerPortsConfigurableEnum[type]
+                                }
+                              >
+                                {type}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Description</FormLabel>
+                          <Input
+                            size="sm"
+                            value={port.description}
+                            onChange={(e) => {
+                              const ports = appData.container?.ports;
+                              if (ports) {
+                                ports[index].description = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    ports: ports,
+                                  },
+                                });
+                              }
+                            }}
+                          />
+                        </FormControl>
+                      </HStack>
+                    </Box>
+                    <IconButton
+                      aria-label="Delete Port"
+                      icon={<MdDelete />}
+                      height="8.5rem"
                       onClick={() => {
-                        const cap_add = appData.container?.cap_add;
-                        if (cap_add) {
-                          cap_add.splice(index, 1);
+                        const ports = appData.container?.ports;
+                        if (ports) {
+                          ports.splice(index, 1);
                           setAppData({
                             ...appData,
                             container: {
                               ...appData.container,
-                              cap_add: cap_add,
+                              ports: ports,
                             },
                           });
                         }
                       }}
                     />
-                  </Tag>
+                  </HStack>
                 ))
               ) : (
-                <Text>No capabilities added yet.</Text>
+                <Text>No ports yet.</Text>
               )}
-            </VStack>
-            <Select
-              placeholder="Select capability to add"
-              size="sm"
-              onChange={(e) => {
-                const cap_add = appData.container?.cap_add;
-                if (!cap_add?.includes(e.target.value)) {
-                  if (cap_add) {
-                    cap_add.push(e.target.value);
+            </FormControl>
+            <br />
+            <FormControl>
+              <FormLabel>
+                Volumes{" "}
+                <Button
+                  size="xs"
+                  colorScheme="blue"
+                  onClick={() => {
+                    const volumes = appData.container?.volumes;
+                    if (volumes) {
+                      volumes.push({
+                        container: "",
+                        host: "",
+                        mode: AppFile2ContainerVolumesModeEnum.Rw,
+                        allocation:
+                          AppFile2ContainerVolumesAllocationEnum.Automatic,
+                        configurable:
+                          AppFile2ContainerVolumesConfigurableEnum.Basic,
+                        description: "",
+                      });
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          volumes: volumes,
+                        },
+                      });
+                    } else {
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          volumes: [
+                            {
+                              container: "",
+                              host: "",
+                              mode: AppFile2ContainerVolumesModeEnum.Rw,
+                              allocation:
+                                AppFile2ContainerVolumesAllocationEnum.Automatic,
+                              configurable:
+                                AppFile2ContainerVolumesConfigurableEnum.Basic,
+                              description: "",
+                            },
+                          ],
+                        },
+                      });
+                    }
+                  }}
+                >
+                  Add
+                </Button>
+              </FormLabel>
+              {appData.container?.volumes?.length ? (
+                appData.container?.volumes.map((volume, index) => (
+                  <HStack
+                    key={index}
+                    spacing="0.5rem"
+                    paddingLeft="0.5rem"
+                    borderLeft="2px"
+                    marginBottom="1rem"
+                  >
+                    <Box flex="1">
+                      <HStack spacing="0.5rem" marginBottom="0.5rem">
+                        <FormControl>
+                          <FormLabel>Container</FormLabel>
+                          <Input
+                            size="sm"
+                            value={volume.container}
+                            onChange={(e) => {
+                              const volumes = appData.container?.volumes;
+                              if (volumes) {
+                                volumes[index].container = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    volumes: volumes,
+                                  },
+                                });
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Host</FormLabel>
+                          <Input
+                            size="sm"
+                            value={volume.host}
+                            onChange={(e) => {
+                              const volumes = appData.container?.volumes;
+                              if (volumes) {
+                                volumes[index].host = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    volumes: volumes,
+                                  },
+                                });
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Mode</FormLabel>
+                          <Select
+                            size="sm"
+                            value={volume.mode}
+                            onChange={(e) => {
+                              const volumes = appData.container?.volumes;
+                              if (volumes) {
+                                volumes[index].mode = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    volumes: volumes,
+                                  },
+                                });
+                              }
+                            }}
+                          >
+                            {(
+                              Object.keys(
+                                AppFile2ContainerVolumesModeEnum
+                              ) as Array<
+                                keyof typeof AppFile2ContainerVolumesModeEnum
+                              >
+                            ).map((type) => (
+                              <option
+                                key={type}
+                                value={AppFile2ContainerVolumesModeEnum[type]}
+                              >
+                                {AppFile2ContainerVolumesModeEnum[type]}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </HStack>
+                      <HStack spacing="0.5rem">
+                        <FormControl>
+                          <FormLabel>Allocation</FormLabel>
+                          <Select
+                            size="sm"
+                            value={volume.allocation}
+                            onChange={(e) => {
+                              const volumes = appData.container?.volumes;
+                              if (volumes) {
+                                volumes[index].allocation = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    volumes: volumes,
+                                  },
+                                });
+                              }
+                            }}
+                          >
+                            {(
+                              Object.keys(
+                                AppFile2ContainerVolumesAllocationEnum
+                              ) as Array<
+                                keyof typeof AppFile2ContainerVolumesAllocationEnum
+                              >
+                            ).map((type) => (
+                              <option
+                                key={type}
+                                value={
+                                  AppFile2ContainerVolumesAllocationEnum[type]
+                                }
+                              >
+                                {type}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Configurable</FormLabel>
+                          <Select
+                            size="sm"
+                            value={volume.configurable}
+                            onChange={(e) => {
+                              const volumes = appData.container?.volumes;
+                              if (volumes) {
+                                volumes[index].configurable = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    volumes: volumes,
+                                  },
+                                });
+                              }
+                            }}
+                          >
+                            {(
+                              Object.keys(
+                                AppFile2ContainerVolumesConfigurableEnum
+                              ) as Array<
+                                keyof typeof AppFile2ContainerVolumesConfigurableEnum
+                              >
+                            ).map((type) => (
+                              <option
+                                key={type}
+                                value={
+                                  AppFile2ContainerVolumesConfigurableEnum[type]
+                                }
+                              >
+                                {type}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Description</FormLabel>
+                          <Input
+                            size="sm"
+                            value={volume.description}
+                            onChange={(e) => {
+                              const volumes = appData.container?.volumes;
+                              if (volumes) {
+                                volumes[index].description = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    volumes: volumes,
+                                  },
+                                });
+                              }
+                            }}
+                          />
+                        </FormControl>
+                      </HStack>
+                    </Box>
+                    <IconButton
+                      aria-label="Delete Volume"
+                      icon={<MdDelete />}
+                      height="8.5rem"
+                      onClick={() => {
+                        const volumes = appData.container?.volumes;
+                        if (volumes) {
+                          volumes.splice(index, 1);
+                          setAppData({
+                            ...appData,
+                            container: {
+                              ...appData.container,
+                              volumes: volumes,
+                            },
+                          });
+                        }
+                      }}
+                    />
+                  </HStack>
+                ))
+              ) : (
+                <Text>No volumes yet.</Text>
+              )}
+            </FormControl>
+            <br />
+            <FormControl>
+              <FormLabel>
+                Devices{" "}
+                <Button
+                  size="xs"
+                  colorScheme="blue"
+                  onClick={() => {
+                    const devices = appData.container?.devices;
+                    if (devices) {
+                      devices.push({
+                        container: "",
+                        host: "",
+                        allocation:
+                          AppFile2ContainerDevicesAllocationEnum.Optional,
+                        configurable:
+                          AppFile2ContainerDevicesConfigurableEnum.Basic,
+                        description: "",
+                      });
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          devices: devices,
+                        },
+                      });
+                    } else {
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          devices: [
+                            {
+                              container: "",
+                              host: "",
+                              allocation:
+                                AppFile2ContainerDevicesAllocationEnum.Optional,
+                              configurable:
+                                AppFile2ContainerDevicesConfigurableEnum.Basic,
+                              description: "",
+                            },
+                          ],
+                        },
+                      });
+                    }
+                  }}
+                >
+                  Add
+                </Button>
+              </FormLabel>
+              {appData.container?.devices?.length ? (
+                appData.container.devices.map((device, index) => (
+                  <HStack
+                    key={index}
+                    spacing="0.5rem"
+                    marginBottom="1rem"
+                    paddingLeft="0.5rem"
+                    borderLeft="2px"
+                  >
+                    <Box flex="1">
+                      <HStack spacing="0.5rem" marginBottom="0.5rem">
+                        <FormControl>
+                          <FormLabel>Container</FormLabel>
+                          <Input
+                            size="sm"
+                            value={device.container}
+                            onChange={(e) => {
+                              const devices = appData.container?.devices;
+                              if (devices) {
+                                devices[index].container = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    devices: devices,
+                                  },
+                                });
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Host</FormLabel>
+                          <Input
+                            size="sm"
+                            value={device.host}
+                            onChange={(e) => {
+                              const devices = appData.container?.devices;
+                              if (devices) {
+                                devices[index].host = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    devices: devices,
+                                  },
+                                });
+                              }
+                            }}
+                          />
+                        </FormControl>
+                      </HStack>
+                      <HStack spacing="0.5rem">
+                        <FormControl>
+                          <FormLabel>Allocation</FormLabel>
+                          <Select
+                            size="sm"
+                            value={device.allocation}
+                            onChange={(e) => {
+                              const devices = appData.container?.devices;
+                              if (devices) {
+                                devices[index].allocation = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    devices: devices,
+                                  },
+                                });
+                              }
+                            }}
+                          >
+                            {(
+                              Object.keys(
+                                AppFile2ContainerDevicesAllocationEnum
+                              ) as Array<
+                                keyof typeof AppFile2ContainerDevicesAllocationEnum
+                              >
+                            ).map((type) => (
+                              <option
+                                key={type}
+                                value={
+                                  AppFile2ContainerDevicesAllocationEnum[type]
+                                }
+                              >
+                                {type}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Configurable</FormLabel>
+                          <Select
+                            size="sm"
+                            value={device.configurable}
+                            onChange={(e) => {
+                              const devices = appData.container?.devices;
+                              if (devices) {
+                                devices[index].configurable = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    devices: devices,
+                                  },
+                                });
+                              }
+                            }}
+                          >
+                            {(
+                              Object.keys(
+                                AppFile2ContainerDevicesConfigurableEnum
+                              ) as Array<
+                                keyof typeof AppFile2ContainerDevicesConfigurableEnum
+                              >
+                            ).map((type) => (
+                              <option
+                                key={type}
+                                value={
+                                  AppFile2ContainerDevicesConfigurableEnum[type]
+                                }
+                              >
+                                {type}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Description</FormLabel>
+                          <Input
+                            size="sm"
+                            value={device.description}
+                            onChange={(e) => {
+                              const devices = appData.container?.devices;
+                              if (devices) {
+                                devices[index].description = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    devices: devices,
+                                  },
+                                });
+                              }
+                            }}
+                          />
+                        </FormControl>
+                      </HStack>
+                    </Box>
+                    <IconButton
+                      height="8.5rem"
+                      aria-label="Delete"
+                      icon={<MdDelete />}
+                      onClick={() => {
+                        const devices = appData.container?.devices;
+                        if (devices) {
+                          devices.splice(index, 1);
+                          setAppData({
+                            ...appData,
+                            container: {
+                              ...appData.container,
+                              devices: devices,
+                            },
+                          });
+                        }
+                      }}
+                    />
+                  </HStack>
+                ))
+              ) : (
+                <Text>No devices yet.</Text>
+              )}
+            </FormControl>
+            <br />
+            <FormControl>
+              <FormLabel>
+                Environment Variables{" "}
+                <Button
+                  size="xs"
+                  colorScheme="blue"
+                  onClick={() => {
+                    const envs = appData.container?.envs;
+                    if (envs) {
+                      envs.push({
+                        key: "",
+                        value: "",
+                        configurable:
+                          AppFile2ContainerEnvsConfigurableEnum.Basic,
+                        description: "",
+                      });
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          envs: envs,
+                        },
+                      });
+                    } else {
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          envs: [
+                            {
+                              key: "",
+                              value: "",
+                              configurable:
+                                AppFile2ContainerEnvsConfigurableEnum.Basic,
+                              description: "",
+                            },
+                          ],
+                        },
+                      });
+                    }
+                  }}
+                >
+                  Add
+                </Button>
+              </FormLabel>
+              {appData.container?.envs?.length ? (
+                appData.container.envs.map((env, index) => (
+                  <HStack
+                    key={index}
+                    spacing="0.5rem"
+                    marginBottom="1rem"
+                    paddingLeft="0.5rem"
+                    borderLeft="2px"
+                  >
+                    <Box flex="1">
+                      <HStack spacing="0.5rem" marginBottom="0.5rem">
+                        <FormControl>
+                          <FormLabel>Key</FormLabel>
+                          <Input
+                            size="sm"
+                            value={env.key}
+                            onChange={(e) => {
+                              const envs = appData.container?.envs;
+                              if (envs) {
+                                envs[index].key = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    envs: envs,
+                                  },
+                                });
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Value</FormLabel>
+                          <Input
+                            size="sm"
+                            value={env.value}
+                            onChange={(e) => {
+                              const envs = appData.container?.envs;
+                              if (envs) {
+                                envs[index].value = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    envs: envs,
+                                  },
+                                });
+                              }
+                            }}
+                          />
+                        </FormControl>
+                      </HStack>
+                      <HStack spacing="0.5rem">
+                        <FormControl>
+                          <FormLabel>Configurable</FormLabel>
+                          <Select
+                            size="sm"
+                            value={env.configurable}
+                            onChange={(e) => {
+                              const envs = appData.container?.envs;
+                              if (envs) {
+                                envs[index].configurable = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    envs: envs,
+                                  },
+                                });
+                              }
+                            }}
+                          >
+                            {(
+                              Object.keys(
+                                AppFile2ContainerEnvsConfigurableEnum
+                              ) as Array<
+                                keyof typeof AppFile2ContainerEnvsConfigurableEnum
+                              >
+                            ).map((type) => (
+                              <option
+                                key={type}
+                                value={
+                                  AppFile2ContainerEnvsConfigurableEnum[type]
+                                }
+                              >
+                                {type}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        <FormControl>
+                          <FormLabel>Description</FormLabel>
+                          <Input
+                            size="sm"
+                            value={env.description}
+                            onChange={(e) => {
+                              const envs = appData.container?.envs;
+                              if (envs) {
+                                envs[index].description = e.target.value;
+                                setAppData({
+                                  ...appData,
+                                  container: {
+                                    ...appData.container,
+                                    envs: envs,
+                                  },
+                                });
+                              }
+                            }}
+                          />
+                        </FormControl>
+                      </HStack>
+                    </Box>
+                    <IconButton
+                      aria-label="Delete Environment Variable"
+                      icon={<MdDelete />}
+                      height="8.5rem"
+                      onClick={() => {
+                        const envs = appData.container?.envs;
+                        if (envs) {
+                          envs.splice(index, 1);
+                          setAppData({
+                            ...appData,
+                            container: {
+                              ...appData.container,
+                              envs: envs,
+                            },
+                          });
+                        }
+                      }}
+                    />
+                  </HStack>
+                ))
+              ) : (
+                <Text>No environment variables yet.</Text>
+              )}
+            </FormControl>
+            <br />
+            <FormControl>
+              <FormLabel>Cap Add</FormLabel>
+              <VStack alignItems="start" marginBottom="0.5rem">
+                {appData.container?.cap_add?.length ? (
+                  appData.container.cap_add.map((cap, index) => (
+                    <Tag key={index}>
+                      <TagLabel>{cap}</TagLabel>
+                      <TagCloseButton
+                        onClick={() => {
+                          const cap_add = appData.container?.cap_add;
+                          if (cap_add) {
+                            cap_add.splice(index, 1);
+                            setAppData({
+                              ...appData,
+                              container: {
+                                ...appData.container,
+                                cap_add: cap_add,
+                              },
+                            });
+                          }
+                        }}
+                      />
+                    </Tag>
+                  ))
+                ) : (
+                  <Text>No capabilities added yet.</Text>
+                )}
+              </VStack>
+              <Select
+                placeholder="Select capability to add"
+                size="sm"
+                onChange={(e) => {
+                  const cap_add = appData.container?.cap_add;
+                  if (!cap_add?.includes(e.target.value)) {
+                    if (cap_add) {
+                      cap_add.push(e.target.value);
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          cap_add: cap_add,
+                        },
+                      });
+                    } else {
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          cap_add: [e.target.value],
+                        },
+                      });
+                    }
+                  }
+                  e.target.value = "";
+                }}
+              >
+                {appCaps.map((cap) =>
+                  appData.container?.cap_add instanceof Array &&
+                  appData.container?.cap_add?.includes(cap) ? null : (
+                    <option key={cap} value={cap}>
+                      {cap}
+                    </option>
+                  )
+                )}
+              </Select>
+            </FormControl>
+            <br />
+            <FormControl>
+              <FormLabel>Restart Policy</FormLabel>
+              <Select
+                placeholder="Select restart policy"
+                value={appData.container?.restart_policy}
+                onChange={(e) => {
+                  setAppData({
+                    ...appData,
+                    container: {
+                      ...appData.container,
+                      restart_policy: e.target.value,
+                    },
+                  });
+                }}
+              >
+                {(
+                  Object.keys(AppFile2ContainerRestartPolicyEnum) as Array<
+                    keyof typeof AppFile2ContainerRestartPolicyEnum
+                  >
+                ).map((type) => (
+                  <option
+                    key={type}
+                    value={AppFile2ContainerRestartPolicyEnum[type]}
+                  >
+                    {AppFile2ContainerRestartPolicyEnum[type]}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+            <br />
+            <FormControl>
+              <FormLabel>CMD</FormLabel>
+              {appData.container?.cmd?.length ? (
+                <VStack alignItems="start" marginBottom="0.5rem">
+                  {appData.container?.cmd?.map((c, index) => (
+                    <Tag key={index}>
+                      <TagLabel>{c}</TagLabel>
+                      <TagCloseButton
+                        onClick={() => {
+                          const cmd = appData.container?.cmd;
+                          if (cmd) {
+                            cmd.splice(index, 1);
+                            setAppData({
+                              ...appData,
+                              container: {
+                                ...appData.container,
+                                cmd: cmd,
+                              },
+                            });
+                          }
+                        }}
+                      />
+                    </Tag>
+                  ))}
+                </VStack>
+              ) : (
+                <Text>No CMD yet.</Text>
+              )}
+              <Formik
+                initialValues={{ cmd: "" }}
+                onSubmit={(values, actions) => {
+                  const cmd = appData.container?.cmd;
+                  if (cmd) {
+                    cmd.push(values.cmd);
                     setAppData({
                       ...appData,
                       container: {
                         ...appData.container,
-                        cap_add: cap_add,
+                        cmd: cmd,
                       },
                     });
                   } else {
@@ -1839,187 +1984,93 @@ export default function EditorPanel() {
                       ...appData,
                       container: {
                         ...appData.container,
-                        cap_add: [e.target.value],
+                        cmd: [values.cmd],
                       },
                     });
                   }
-                }
-                e.target.value = "";
-              }}
-            >
-              {appCaps.map((cap) =>
-                appData.container?.cap_add instanceof Array && appData.container?.cap_add?.includes(cap) ? null : (
-                  <option key={cap} value={cap}>
-                    {cap}
-                  </option>
-                )
-              )}
-            </Select>
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>Restart Policy</FormLabel>
-            <Select
-              placeholder="Select restart policy"
-              value={appData.container?.restart_policy}
-              onChange={(e) => {
-                setAppData({
-                  ...appData,
-                  container: {
-                    ...appData.container,
-                    restart_policy: e.target.value,
-                  },
-                });
-              }}
-            >
-              {(
-                Object.keys(AppFile2ContainerRestartPolicyEnum) as Array<
-                  keyof typeof AppFile2ContainerRestartPolicyEnum
-                >
-              ).map((type) => (
-                <option
-                  key={type}
-                  value={AppFile2ContainerRestartPolicyEnum[type]}
-                >
-                  {AppFile2ContainerRestartPolicyEnum[type]}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>CMD</FormLabel>
-            {appData.container?.cmd?.length ? (
-              <VStack alignItems="start" marginBottom="0.5rem">
-                {appData.container?.cmd?.map((c, index) => (
-                  <Tag key={index}>
-                    <TagLabel>{c}</TagLabel>
-                    <TagCloseButton
-                      onClick={() => {
-                        const cmd = appData.container?.cmd;
-                        if (cmd) {
-                          cmd.splice(index, 1);
-                          setAppData({
-                            ...appData,
-                            container: {
-                              ...appData.container,
-                              cmd: cmd,
-                            },
-                          });
-                        }
-                      }}
-                    />
-                  </Tag>
-                ))}
-              </VStack>
-            ) : (
-              <Text>No CMD yet.</Text>
-            )}
-            <Formik
-              initialValues={{ cmd: "" }}
-              onSubmit={(values, actions) => {
-                const cmd = appData.container?.cmd;
-                if (cmd) {
-                  cmd.push(values.cmd);
-                  setAppData({
-                    ...appData,
-                    container: {
-                      ...appData.container,
-                      cmd: cmd,
-                    },
-                  });
-                } else {
-                  setAppData({
-                    ...appData,
-                    container: {
-                      ...appData.container,
-                      cmd: [values.cmd],
-                    },
-                  });
-                }
-                actions.setValues({ cmd: "" });
-              }}
-            >
-              {(props) => (
-                <Form>
-                  <HStack spacing="0.5rem" marginBottom="0.5rem">
-                    <Field
-                      name="cmd"
-                      validate={(value: any) => {
-                        if (!value) {
-                          return "CMD cannot be empty";
-                        }
-                      }}
-                    >
-                      {({ field, form }: { field: any; form: any }) => (
-                        <FormControl>
-                          <Input {...field} placeholder="Add new CMD here" />
-                        </FormControl>
-                      )}
-                    </Field>
-                    <Button type="submit">Add</Button>
-                  </HStack>
-                </Form>
-              )}
-            </Formik>
-          </FormControl>
-          <br />
-          <FormControl>
-            <FormLabel>Constraints</FormLabel>
-            <HStack spacing="0.5rem" marginBottom="0.5rem">
-              <FormControl>
-                <FormLabel>Min Memory</FormLabel>
-                <NumberInput
-                  min={1}
-                  value={appData.container?.constraints?.min_memory?.toString()}
-                  onChange={(value) => {
-                    setAppData({
-                      ...appData,
-                      container: {
-                        ...appData.container,
-                        constraints: {
-                          ...appData.container?.constraints,
-                          min_memory: parseInt(value),
+                  actions.setValues({ cmd: "" });
+                }}
+              >
+                {(props) => (
+                  <Form>
+                    <HStack spacing="0.5rem" marginBottom="0.5rem">
+                      <Field
+                        name="cmd"
+                        validate={(value: any) => {
+                          if (!value) {
+                            return "CMD cannot be empty";
+                          }
+                        }}
+                      >
+                        {({ field, form }: { field: any; form: any }) => (
+                          <FormControl>
+                            <Input {...field} placeholder="Add new CMD here" />
+                          </FormControl>
+                        )}
+                      </Field>
+                      <Button type="submit">Add</Button>
+                    </HStack>
+                  </Form>
+                )}
+              </Formik>
+            </FormControl>
+            <br />
+            <FormControl>
+              <FormLabel>Constraints</FormLabel>
+              <HStack spacing="0.5rem" marginBottom="0.5rem">
+                <FormControl>
+                  <FormLabel>Min Memory</FormLabel>
+                  <NumberInput
+                    min={1}
+                    value={appData.container?.constraints?.min_memory?.toString()}
+                    onChange={(value) => {
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          constraints: {
+                            ...appData.container?.constraints,
+                            min_memory: parseInt(value),
+                          },
                         },
-                      },
-                    });
-                  }}
-                >
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </FormControl>
-              <FormControl>
-                <FormLabel>Min Storage</FormLabel>
-                <NumberInput
-                  min={1}
-                  value={appData.container?.constraints?.min_storage?.toString()}
-                  onChange={(value) => {
-                    setAppData({
-                      ...appData,
-                      container: {
-                        ...appData.container,
-                        constraints: {
-                          ...appData.container?.constraints,
-                          min_storage: parseInt(value),
+                      });
+                    }}
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Min Storage</FormLabel>
+                  <NumberInput
+                    min={1}
+                    value={appData.container?.constraints?.min_storage?.toString()}
+                    onChange={(value) => {
+                      setAppData({
+                        ...appData,
+                        container: {
+                          ...appData.container,
+                          constraints: {
+                            ...appData.container?.constraints,
+                            min_storage: parseInt(value),
+                          },
                         },
-                      },
-                    });
-                  }}
-                >
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </FormControl>
-            </HStack>
-          </FormControl>
-          <br />
+                      });
+                    }}
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                </FormControl>
+              </HStack>
+            </FormControl>
+          </Box>
         </FormControl>
         <br />
         <FormControl>
@@ -2161,7 +2212,6 @@ export default function EditorPanel() {
           </FormControl>
         </FormControl>
       </Box>
-
 
       <Box flex="1" height="100%" overflowY="scroll">
         <AppFileViewer />

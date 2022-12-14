@@ -85,7 +85,7 @@ export default function SaveButton(props: ButtonProps) {
   const [appData, setAppData] = useAppData();
   const [appImageAgents, setAppImageAgents] = useAppImageAgents();
 
-  const folderName = appData.title?.replace(/[^a-z0-9-]/gi, "");
+  const folderName = appData.title?.replace(/[^a-z0-9-]/gi, "") || "app";
   const outputAppData = {
     ...appData,
     icon: appData.icon?.startsWith("http")

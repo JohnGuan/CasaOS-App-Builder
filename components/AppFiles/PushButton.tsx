@@ -1,4 +1,5 @@
 import { Button, ButtonProps, useToast } from "@chakra-ui/react";
+import { useState } from "react";
 import { HiCircleStack } from "react-icons/hi2";
 import {
   useAppData,
@@ -16,13 +17,17 @@ export default function PushButton(props: ButtonProps) {
   const [currentAppType, setCurrentAppType] = useCurrentAppType();
   const [appImageAgents, setAppImageAgents] = useAppImageAgents();
   const [appStoreAppList, setAppStoreAppList] = useAppStoreAppList();
+  const [isPushing, setIsPushing] = useState(false);
 
   return (
     <Button
       leftIcon={<HiCircleStack />}
+      isLoading={isPushing}
       colorScheme="blue"
+      loadingText="Pushing..."
       onClick={() => {
         console.log("Push to App Store");
+        setIsPushing(true);
         const testAppData = {
           ...appData,
           id: currentAppID || -1,
@@ -51,22 +56,29 @@ export default function PushButton(props: ButtonProps) {
         };
 
         fetch("/api/appstore/v2/app/add", requestOptions)
-          .then((response) => response.text())
+          .then((response) => {
+            console.log("push response",response);
+            return response.text()
+          })
           .then((result) => {
-            console.log(result)
-            toast({
-              title: "Pushed to App Store",
-              description: "Your app has been pushed to the App Store.",
-              position: "top",
-              status: "success",
-              duration: 3000,
-              isClosable: true,
-            });
-            setCurrentAppID(JSON.parse(result).data.id || -1);
-            updateAppStoreAppList(setAppStoreAppList);
+            console.log("push result", result);
+            if (result) {
+              toast({
+                title: "Pushed to App Store",
+                description: "Your app has been pushed to the App Store.",
+                position: "top",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+              });
+              setCurrentAppID(JSON.parse(result).data.id || -1);
+              updateAppStoreAppList(setAppStoreAppList);
+            } else{
+              throw new Error("No result");
+            }
           })
           .catch((error) => {
-            console.log("error", error)
+            console.log("push error", error);
             toast({
               title: "Push to App Store failed",
               description: "Your app could not be pushed to the App Store.",
@@ -75,6 +87,9 @@ export default function PushButton(props: ButtonProps) {
               duration: 3000,
               isClosable: true,
             });
+          })
+          .finally(() => {
+            setIsPushing(false);
           });
       }}
       {...props}

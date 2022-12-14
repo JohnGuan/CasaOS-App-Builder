@@ -12,8 +12,9 @@ import {
   NumberDecrementStepper,
   Tooltip,
   useToast,
+  Box,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HiArrowPath, HiTrash } from "react-icons/hi2";
 import {
   fillAppFile2ToAppData,
@@ -26,14 +27,15 @@ import {
 import NewButton from "./NewButton";
 import OpenButton from "./OpenButton";
 
-
-
 export default function AppFileSidebar() {
   const toast = useToast();
   const [appStoreAppList, setAppStoreAppList] = useAppStoreAppList();
   const [currentAppID, setCurrentAppID] = useCurrentAppID();
   const [currentAppType, setCurrentAppType] = useCurrentAppType();
   const [appData, setAppData] = useAppData();
+
+  const appListTop = useRef<HTMLDivElement>();
+  const appListBottom = useRef<HTMLDivElement>();
 
   useEffect(() => {
     updateAppStoreAppList(setAppStoreAppList);
@@ -46,7 +48,12 @@ export default function AppFileSidebar() {
           <NewButton size="sm" />
           <OpenButton size="sm" />
         </HStack>
-        <VStack padding="0.5rem" width="100%" border="1px" borderRadius="0.5rem">
+        <VStack
+          padding="0.5rem"
+          width="100%"
+          border="1px"
+          borderRadius="0.5rem"
+        >
           <Text as="b">Current Editing App</Text>
           <Text as="b" fontSize="sm">
             App ID
@@ -78,12 +85,7 @@ export default function AppFileSidebar() {
           <Text as="b" fontSize="sm">
             App Type
           </Text>
-          <ButtonGroup
-            isAttached
-            size="xs"
-            width="100%"
-            colorScheme="blue"
-          >
+          <ButtonGroup isAttached size="xs" width="100%" colorScheme="blue">
             <Button
               variant={currentAppType === 0 ? "solid" : "outline"}
               onClick={() => {
@@ -110,76 +112,133 @@ export default function AppFileSidebar() {
             </Button>
           </ButtonGroup>
         </VStack>
+        <VStack
+          paddingY="0.5rem"
+          width="100%"
+          border="1px"
+          borderRadius="0.5rem"
+          height="100%"
+          overflowY="hidden"
+        >
+          <Text as="b">
+            Apps{" "}
+            <IconButton
+              aria-label="Refresh"
+              size="xs"
+              icon={<HiArrowPath />}
+              onClick={() => updateAppStoreAppList(setAppStoreAppList)}
+            />
+          </Text>
+          <Text fontSize="xs">From local App Store</Text>
+          <Box position="relative" height="100%" width="100%">
+            <Box
+              position="absolute"
+              marginX="0.5rem"
+              width="calc(100% - 1rem)"
+              height="1.5rem"
+              top="0"
+              zIndex="overlay"
+              background="linear-gradient(180deg, rgba(0, 0, 0, 0.36), transparent)"
+              borderRadius="0.25rem 0.25rem 0 0"
+              opacity="0"
+              pointerEvents="none"
+              ref={appListTop}
+            />
 
-        <Text as="b">
-          Apps{" "}
-          <IconButton
-            aria-label="Refresh"
-            size="xs"
-            icon={<HiArrowPath />}
-            onClick={() => updateAppStoreAppList(setAppStoreAppList)}
-          />
-        </Text>
-        <Text fontSize="xs">From local App Store</Text>
-        <VStack height="100%" paddingX="1rem" overflowY="scroll">
-          {appStoreAppList &&
-            appStoreAppList.map((app) => {
-              return (
-                <ButtonGroup
-                  key={app.id}
-                  isAttached
-                  size="xs"
-                  width="100%"
-                  colorScheme="blue"
-                  variant={"outline"}
-                >
-                  <Button
-                    flexGrow="1"
-                    variant={app.id === currentAppID ? "solid" : "outline"}
-                    isDisabled={!app.github_model}
-                    onClick={() => {
-                      setCurrentAppID(app.id);
-                      setCurrentAppType(app.type);
-                      setAppData(
-                        fillAppFile2ToAppData(
-                          JSON.parse(app.github_model),
-                          appData
-                        )
-                      );
-                    }}
-                  >
-                    {app.title}
-                  </Button>
-                  <Tooltip label={app.id.toString()} placement="right">
-                    <Button onClick={() => setCurrentAppID(app.id)}>ID</Button>
-                  </Tooltip>
-                  <Tooltip label="Delete" placement="right">
-                    <IconButton
-                      aria-label="Delete"
-                      icon={<HiTrash />}
-                      onClick={() => {
-                        console.log("Delete app", app);
-                        fetch(`/api/appstore/v2/app/${app.id}`, {
-                          method: "DELETE",
-                        })
-                          .then((response) => response.json())
-                          .then((result) => {
-                            console.log(result);
-                            toast({
-                              title: `App ${app.title} (ID:${app.id}) deleted.`,
-                              status: "success",
-                              duration: 3000,
-                              isClosable: true,
-                              position: "top",
-                            });
-                            updateAppStoreAppList(setAppStoreAppList);
-                          });
-                      }}
-                    />
-                  </Tooltip>
-                </ButtonGroup>
-              );
-            })}
+            <Box
+              position="absolute"
+              marginX="0.5rem"
+              width="calc(100% - 1rem)"
+              height="1.5rem"
+              bottom="0"
+              zIndex="overlay"
+              background="linear-gradient(0deg, rgba(0, 0, 0, 0.36), transparent)"
+              borderRadius="0 0 0.25rem 0.25rem"
+              opacity="1"
+              pointerEvents="none"
+              ref={appListBottom}
+            />
+
+            <VStack
+              position="absolute"
+              height="100%"
+              width="100%"
+              paddingX="1rem"
+              overflowY="scroll"
+              onScroll={(e) => {
+                const target = e.target as HTMLDivElement;
+                var scrollHeight = target.scrollHeight;
+                var scrollTop = target.scrollTop;
+                var clientHeight = target.clientHeight;
+                const currentScroll = (scrollTop/(scrollHeight-clientHeight));
+                appListTop.current.style.opacity = currentScroll.toString();
+                appListBottom.current.style.opacity = (1-currentScroll).toString();
+                
+              }}
+            >
+              {" "}
+              {appStoreAppList &&
+                appStoreAppList.map((app) => {
+                  return (
+                    <ButtonGroup
+                      key={app.id}
+                      isAttached
+                      size="xs"
+                      width="100%"
+                      colorScheme="blue"
+                      variant={"outline"}
+                    >
+                      <Button
+                        flexGrow="1"
+                        variant={app.id === currentAppID ? "solid" : "outline"}
+                        isDisabled={!app.github_model}
+                        onClick={() => {
+                          setCurrentAppID(app.id);
+                          setCurrentAppType(app.type);
+                          setAppData(
+                            fillAppFile2ToAppData(
+                              JSON.parse(app.github_model),
+                              appData
+                            )
+                          );
+                        }}
+                      >
+                        {app.title}
+                      </Button>
+                      <Tooltip label={app.id.toString()} placement="right">
+                        <Button onClick={() => setCurrentAppID(app.id)}>
+                          ID
+                        </Button>
+                      </Tooltip>
+                      <Tooltip label="Delete" placement="right">
+                        <IconButton
+                          aria-label="Delete"
+                          icon={<HiTrash />}
+                          onClick={() => {
+                            console.log("Delete app", app);
+                            fetch(`/api/appstore/v2/app/${app.id}`, {
+                              method: "DELETE",
+                            })
+                              .then((response) => response.json())
+                              .then((result) => {
+                                console.log(result);
+                                toast({
+                                  title: `App ${app.title} (ID:${app.id}) deleted.`,
+                                  status: "success",
+                                  duration: 3000,
+                                  isClosable: true,
+                                  position: "top",
+                                });
+                                updateAppStoreAppList(setAppStoreAppList);
+                              });
+                          }}
+                        />
+                      </Tooltip>
+                    </ButtonGroup>
+                  );
+                })}
+            </VStack>
+          </Box>
         </VStack>
       </VStack>
     </>
