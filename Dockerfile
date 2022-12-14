@@ -37,7 +37,7 @@ RUN \
 WORKDIR /app
 COPY --from=node_deps /app/.yarn ./.yarn
 COPY --from=node_deps /app/node_modules ./node_modules
-COPY . .
+COPY [^scripts]*/* .
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
