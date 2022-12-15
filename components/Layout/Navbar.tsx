@@ -25,7 +25,7 @@ export default function Navbar(props: BoxProps) {
       boxShadow={useColorModeValue("sm", "sm-dark")}
       {...props}
     >
-      <Container maxW="8xl" paddingY="1rem">
+      <Container maxW="100%" paddingX="2rem" paddingY="1rem">
         <HStack spacing="10" justify="space-between">
           <Heading as="h1" size="lg">
             CasaOS App Builder

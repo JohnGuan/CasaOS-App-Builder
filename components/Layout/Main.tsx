@@ -14,7 +14,7 @@ export default function Main(props: FlexProps) {
       overflow="hidden"
       {...props}
     >
-      <Container flex="1" maxW="8xl" paddingY="1rem" height="100%">
+      <Container flex="1" maxW="100%" paddingY="1rem" height="100%">
         <EditorPanel />
       </Container>
     </Flex>
