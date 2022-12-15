@@ -84,9 +84,8 @@ export default function EditorPanel() {
       <Box
         flex="1"
         paddingX="1rem"
-        maxWidth="16rem"
+        maxWidth="18rem"
         height="100%"
-        overflowY="scroll"
       >
         <AppFileSidebar />
       </Box>
@@ -214,7 +213,8 @@ export default function EditorPanel() {
               </Button>
             </InputRightElement>
           </InputGroup>
-          <FormHelperText>{`e.g. "https://casaos.com/icon.png"`}</FormHelperText>
+          <FormHelperText>{`e.g. "https://casaos.com/icon.png".`}</FormHelperText>
+          <FormHelperText>Image should be at least 192*192px.</FormHelperText>
         </FormControl>
         <br />
         <FormControl>
@@ -327,7 +327,8 @@ export default function EditorPanel() {
               </Button>
             </InputRightElement>
           </InputGroup>
-          <FormHelperText>Thumbnail url for Featured Apps list</FormHelperText>
+          <FormHelperText>Thumbnail url for Featured Apps list.</FormHelperText>
+          <FormHelperText>Image should be at least 1280*720px.</FormHelperText>
         </FormControl>
         <br />
         <FormControl>
@@ -498,6 +499,7 @@ export default function EditorPanel() {
             <Text>No screenshots yet. Please add one.</Text>
           )}
           <FormHelperText>App screenshots</FormHelperText>
+          <FormHelperText>Images should be at least 1280*720px.</FormHelperText>
         </FormControl>
         <br />
         <FormControl>
@@ -2213,7 +2215,7 @@ export default function EditorPanel() {
         </FormControl>
       </Box>
 
-      <Box flex="1" height="100%" overflowY="scroll">
+      <Box flex="1" height="100%">
         <AppFileViewer />
       </Box>
     </Flex>

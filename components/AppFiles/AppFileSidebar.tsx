@@ -101,7 +101,7 @@ export default function AppFileSidebar() {
           <Text as="b" fontSize="sm">
             App Type
           </Text>
-          <ButtonGroup isAttached size="xs" width="100%" colorScheme="blue">
+          <ButtonGroup isAttached size="xs" width="100%" colorScheme="blue" justifyContent="center">
             <Button
               variant={currentAppType === 0 ? "solid" : "outline"}
               onClick={() => {
@@ -211,26 +211,28 @@ export default function AppFileSidebar() {
                       colorScheme="blue"
                       variant={"outline"}
                     >
-                      <Button
-                        flexGrow="1"
-                        variant={app.id === currentAppID ? "solid" : "outline"}
-                        isDisabled={!app.github_model}
-                        onClick={() => {
-                          setCurrentAppID(app.id);
-                          setCurrentAppType(app.type);
-                          setAppData(
-                            fillAppFile2ToAppData(
-                              JSON.parse(app.github_model),
-                              appData
-                            )
-                          );
-                        }}
-                      >
-                        {app.title}
-                      </Button>
-                      <Tooltip label={app.id.toString()} placement="right">
-                        <Button onClick={() => setCurrentAppID(app.id)}>
-                          ID
+                      <Tooltip label="Get App ID" placement="right">
+                        <Button minWidth="2.5rem" onClick={() => setCurrentAppID(app.id)}>
+                          {app.id}
+                        </Button>
+                      </Tooltip>
+                      <Tooltip label={`Get App File`} placement="right">
+                        <Button
+                          flexGrow="1"
+                          variant={app.id === currentAppID ? "solid" : "outline"}
+                          isDisabled={!app.github_model}
+                          onClick={() => {
+                            setCurrentAppID(app.id);
+                            setCurrentAppType(app.type);
+                            setAppData(
+                              fillAppFile2ToAppData(
+                                JSON.parse(app.github_model),
+                                appData
+                              )
+                            );
+                          }}
+                        >
+                          {app.title}
                         </Button>
                       </Tooltip>
                       <Tooltip label="Delete" placement="right">
