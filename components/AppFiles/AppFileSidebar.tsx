@@ -14,8 +14,8 @@ import {
   useToast,
   Box,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
-import { HiArrowPath, HiTrash } from "react-icons/hi2";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { HiArrowPath, HiBarsArrowDown, HiTrash } from "react-icons/hi2";
 import {
   fillAppFile2ToAppData,
   updateAppStoreAppList,
@@ -26,6 +26,7 @@ import {
 } from "../../modules/CasaOSAppFile";
 import NewButton from "./NewButton";
 import OpenButton from "./OpenButton";
+import PullButton from "./PullButton";
 
 export default function AppFileSidebar() {
   const toast = useToast();
@@ -36,9 +37,24 @@ export default function AppFileSidebar() {
 
   const appListTop = useRef<HTMLDivElement>();
   const appListBottom = useRef<HTMLDivElement>();
+  const appList = useRef<HTMLDivElement>();
 
   useEffect(() => {
     updateAppStoreAppList(setAppStoreAppList);
+  }, []);
+
+  useLayoutEffect(() => {
+    var scrollHeight = appList.current.scrollHeight;
+    var clientHeight = appList.current.clientHeight;
+    console.log(scrollHeight, clientHeight);
+    
+    if ( scrollHeight === clientHeight ) {
+      appListTop.current.style.opacity = "0";
+      appListBottom.current.style.opacity = "0";
+    } else {
+      appListTop.current.style.opacity = "0";
+      appListBottom.current.style.opacity = "1";
+    }
   }, []);
 
   return (
@@ -120,16 +136,20 @@ export default function AppFileSidebar() {
           height="100%"
           overflowY="hidden"
         >
-          <Text as="b">
-            Apps{" "}
-            <IconButton
-              aria-label="Refresh"
-              size="xs"
-              icon={<HiArrowPath />}
-              onClick={() => updateAppStoreAppList(setAppStoreAppList)}
-            />
-          </Text>
+          <Text as="b">Apps</Text>
           <Text fontSize="xs">From local App Store</Text>
+          <HStack justifyContent="center" width="100%">
+            <PullButton />
+            <Tooltip label="Refresh app list" placement="top">
+              <IconButton
+                aria-label="Refresh"
+                size="xs"
+                icon={<HiArrowPath />}
+                onClick={() => updateAppStoreAppList(setAppStoreAppList)}
+              />
+            </Tooltip>
+          </HStack>
+
           <Box position="relative" height="100%" width="100%">
             <Box
               position="absolute"
@@ -138,8 +158,9 @@ export default function AppFileSidebar() {
               height="1.5rem"
               top="0"
               zIndex="overlay"
-              background="linear-gradient(180deg, rgba(0, 0, 0, 0.36), transparent)"
-              borderRadius="0.25rem 0.25rem 0 0"
+              bgGradient="linear(to-b, blackAlpha.600, transparent)"
+              // background="linear-gradient(180deg, rgba(0, 0, 0, 0.48), transparent)"
+              // borderRadius="0.25rem 0.25rem 0 0"
               opacity="0"
               pointerEvents="none"
               ref={appListTop}
@@ -152,8 +173,9 @@ export default function AppFileSidebar() {
               height="1.5rem"
               bottom="0"
               zIndex="overlay"
-              background="linear-gradient(0deg, rgba(0, 0, 0, 0.36), transparent)"
-              borderRadius="0 0 0.25rem 0.25rem"
+              bgGradient="linear(to-t, blackAlpha.600, transparent)"
+              // background="linear-gradient(0deg, rgba(0, 0, 0, 0.48), transparent)"
+              // borderRadius="0 0 0.25rem 0.25rem"
               opacity="1"
               pointerEvents="none"
               ref={appListBottom}
@@ -165,19 +187,20 @@ export default function AppFileSidebar() {
               width="100%"
               paddingX="1rem"
               overflowY="scroll"
+              ref={appList}
               onScroll={(e) => {
                 const target = e.target as HTMLDivElement;
                 var scrollHeight = target.scrollHeight;
                 var scrollTop = target.scrollTop;
                 var clientHeight = target.clientHeight;
-                const currentScroll = (scrollTop/(scrollHeight-clientHeight));
+                const currentScroll = scrollTop / (scrollHeight - clientHeight);
                 appListTop.current.style.opacity = currentScroll.toString();
-                appListBottom.current.style.opacity = (1-currentScroll).toString();
-                
+                appListBottom.current.style.opacity = (
+                  1 - currentScroll
+                ).toString();
               }}
             >
-              {" "}
-              {appStoreAppList &&
+              {appStoreAppList ? (
                 appStoreAppList.map((app) => {
                   return (
                     <ButtonGroup
@@ -236,7 +259,13 @@ export default function AppFileSidebar() {
                       </Tooltip>
                     </ButtonGroup>
                   );
-                })}
+                })
+              ) : (
+                <>
+                  <Text fontSize="sm">No Apps Now.</Text>
+                  <Text fontSize="xs">Try Update or Refresh.</Text>
+                </>
+              )}
             </VStack>
           </Box>
         </VStack>

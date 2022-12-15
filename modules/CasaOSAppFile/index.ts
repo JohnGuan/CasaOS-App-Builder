@@ -352,6 +352,24 @@ export function fillAppFile2ToAppData(
   };
 }
 
+const [useAppData, SharedAppDataProvider] =
+  createStateContext<AppFile2>(newAppFile2);
+const [useAppImageAgents, SharedAppImageAgentsProvider] =
+  createStateContext(appImageAgents);
+const [useCurrentAppID, SharedCurrentAppIDProvider] =
+  createStateContext(-1);
+const [useCurrentAppType, SharedCurrentAppType] =
+  createStateContext(0);
+const [useAppStoreAppList, SharedAppStoreAppListProvider] =
+  createStateContext<any[]>([]);
+
+export * from "./models";
+export { useAppData, SharedAppDataProvider };
+export { useAppImageAgents, SharedAppImageAgentsProvider };
+export { useCurrentAppID, SharedCurrentAppIDProvider };
+export { useCurrentAppType, SharedCurrentAppType };
+export { useAppStoreAppList, SharedAppStoreAppListProvider };
+
 export function updateAppStoreAppList(setAppStoreAppList: Function) {
   console.log("Pull appStoreAppList from local App Store");
   fetch("/api/appstore/v2/app/newlist?size=1000")
@@ -381,20 +399,3 @@ export function updateAppStoreAppList(setAppStoreAppList: Function) {
     });
 }
 
-const [useAppData, SharedAppDataProvider] =
-  createStateContext<AppFile2>(newAppFile2);
-const [useAppImageAgents, SharedAppImageAgentsProvider] =
-  createStateContext(appImageAgents);
-const [useCurrentAppID, SharedCurrentAppIDProvider] =
-  createStateContext(-1);
-const [useCurrentAppType, SharedCurrentAppType] =
-  createStateContext(0);
-const [useAppStoreAppList, SharedAppStoreAppListProvider] =
-  createStateContext<any[]>([]);
-
-export * from "./models";
-export { useAppData, SharedAppDataProvider };
-export { useAppImageAgents, SharedAppImageAgentsProvider };
-export { useCurrentAppID, SharedCurrentAppIDProvider };
-export { useCurrentAppType, SharedCurrentAppType };
-export { useAppStoreAppList, SharedAppStoreAppListProvider };
