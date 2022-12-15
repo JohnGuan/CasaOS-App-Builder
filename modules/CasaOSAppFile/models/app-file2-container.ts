@@ -130,6 +130,6 @@ export enum AppFile2ContainerRestartPolicyEnum {
     Always = 'always',
     UnlessStopped = 'unless-stopped',
     OnFailure = 'on-failure',
-    False = 'false'
+    No = 'no'
 }
 

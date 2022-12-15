@@ -77,7 +77,7 @@ export enum AppFile2ContainerVolumesAllocationEnum {
     * @enum {string}
     */
 export enum AppFile2ContainerVolumesConfigurableEnum {
-    False = 'false',
+    No = 'no',
     Basic = 'basic',
     Advanced = 'advanced'
 }

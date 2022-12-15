@@ -62,7 +62,7 @@ export enum AppFile2ContainerDevicesAllocationEnum {
     * @enum {string}
     */
 export enum AppFile2ContainerDevicesConfigurableEnum {
-    False = 'false',
+    No = 'no',
     Basic = 'basic',
     Advanced = 'advanced'
 }

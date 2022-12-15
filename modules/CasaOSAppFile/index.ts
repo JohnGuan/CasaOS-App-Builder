@@ -243,6 +243,8 @@ export function fillAppFile1ToAppData(
       network_model: appFile1.network_model || "bridge",
       web_ui: {
         ...appData.container?.web_ui,
+        http: appFile1.protocol === "http" ? appFile1.port_map : "",
+        https: appFile1.protocol === "https" ? appFile1.port_map : "",
         path: appFile1.index || "",
       },
       ports:
