@@ -3,7 +3,7 @@
 set -e
 
 echo "Setting up MariaDB..."
-export MYSQL_DATABASE="casa_server"
+export MYSQL_DATABASE="oasis_server"
 export MYSQL_USER="casaosapi"
 export MYSQL_PASSWORD="casaosapi"
 export MYSQL_ROOT_PASSWORD="casaosapi"
