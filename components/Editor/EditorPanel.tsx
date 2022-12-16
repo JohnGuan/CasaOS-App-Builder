@@ -51,8 +51,6 @@ import {
   useAppImageAgents,
 } from "../../modules/CasaOSAppFile";
 import AppFileViewer from "../AppFiles/AppFileViewer";
-import OpenButton from "../AppFiles/OpenButton";
-import NewButton from "../AppFiles/NewButton";
 import AppFileSidebar from "../AppFiles/AppFileSidebar";
 
 function Important() {
@@ -82,15 +80,14 @@ export default function EditorPanel() {
   return (
     <Flex direction="row" height="100%">
       <Box
-        flex="1"
         paddingX="1rem"
-        maxWidth="18rem"
+        width="18rem"
         height="100%"
       >
         <AppFileSidebar />
       </Box>
 
-      <Box flex="1" paddingX="1rem" height="100%" overflowY="scroll">
+      <Box flexGrow="1" paddingX="1rem" minWidth="40rem" height="100%" overflowY="scroll">
         <FormControl>
           <FormLabel>
             <Important /> Version
@@ -2215,7 +2212,7 @@ export default function EditorPanel() {
         </FormControl>
       </Box>
 
-      <Box flex="1" height="100%">
+      <Box paddingX="1rem" width="36rem" height="100%">
         <AppFileViewer />
       </Box>
     </Flex>
