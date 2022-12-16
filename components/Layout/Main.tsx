@@ -11,7 +11,7 @@ export default function Main(props: FlexProps) {
       flex="1"
       py="1rem"
       height="100%"
-      overflow="hidden"
+      overflowY="hidden"
       {...props}
     >
       <Container flex="1" maxW="100%" paddingY="1rem" height="100%">
